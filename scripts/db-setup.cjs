@@ -45,6 +45,12 @@ async function main() {
        ON CONFLICT DO NOTHING`,
       [admin.rows[0].id],
     );
+    await pool.query(
+      `INSERT INTO platform_admins(user_id)
+       VALUES($1)
+       ON CONFLICT DO NOTHING`,
+      [admin.rows[0].id],
+    );
     console.log("Banco preparado. Administrador:", email);
   } finally {
     await pool.end();
