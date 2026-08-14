@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const { Pool } = require("pg");
+const bcrypt = require("bcryptjs");
 
 const localEnvironment = path.join(__dirname, "..", ".env.local");
 for (const line of (fs.existsSync(localEnvironment)
@@ -23,6 +24,40 @@ async function main() {
       .sort()) {
       await pool.query(fs.readFileSync(path.join(directory, file), "utf8"));
       console.log("Migração aplicada:", file);
+    }
+
+    const platformAdmin = await pool.query(
+      "SELECT EXISTS(SELECT 1 FROM platform_admins) AS exists",
+    );
+    if (!platformAdmin.rows[0].exists) {
+      const email = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+      const password = process.env.ADMIN_PASSWORD;
+      if (!email || !password)
+        throw new Error(
+          "ADMIN_EMAIL e ADMIN_PASSWORD são obrigatórios para criar o administrador inicial",
+        );
+
+      const hash = await bcrypt.hash(password, 12);
+      const admin = await pool.query(
+        `INSERT INTO users(name,email,password_hash,role)
+         VALUES($1,$2,$3,'ADMIN')
+         ON CONFLICT(email) DO UPDATE SET name=excluded.name,active=true
+         RETURNING id`,
+        [process.env.ADMIN_NAME || "Administrador", email, hash],
+      );
+      await pool.query(
+        `INSERT INTO organization_members(organization_id,user_id,role)
+         SELECT id,$1,'ADMIN' FROM organizations WHERE slug='navalha'
+         ON CONFLICT DO NOTHING`,
+        [admin.rows[0].id],
+      );
+      await pool.query(
+        `INSERT INTO platform_admins(user_id)
+         VALUES($1)
+         ON CONFLICT DO NOTHING`,
+        [admin.rows[0].id],
+      );
+      console.log("Administrador inicial criado com segurança.");
     }
   } finally {
     await pool.end();
