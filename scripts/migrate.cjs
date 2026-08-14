@@ -29,6 +29,20 @@ async function main() {
   }
 }
 main().catch((error) => {
-  console.error("Falha nas migrações:", error.message);
+  console.error("Falha nas migrações:", {
+    name: error?.name,
+    message: error?.message || "Erro sem mensagem",
+    code: error?.code,
+    detail: error?.detail,
+    cause: error?.cause?.message,
+    errors: Array.isArray(error?.errors)
+      ? error.errors.map((item) => ({
+          message: item?.message,
+          code: item?.code,
+          address: item?.address,
+          port: item?.port,
+        }))
+      : undefined,
+  });
   process.exit(1);
 });
