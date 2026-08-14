@@ -1,0 +1,2 @@
+CREATE TABLE IF NOT EXISTS business_settings(id boolean PRIMARY KEY DEFAULT true CHECK(id),name varchar(120) NOT NULL DEFAULT 'Navalha Barber Club',phone varchar(30),email varchar(180),address text,timezone varchar(60) NOT NULL DEFAULT 'America/Cuiaba',currency varchar(3) NOT NULL DEFAULT 'BRL',updated_at timestamptz NOT NULL DEFAULT now(),updated_by uuid REFERENCES users(id));
+INSERT INTO business_settings(id) SELECT true WHERE NOT EXISTS(SELECT 1 FROM business_settings);

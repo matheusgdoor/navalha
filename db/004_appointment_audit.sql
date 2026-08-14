@@ -1,0 +1,2 @@
+CREATE TABLE IF NOT EXISTS appointment_audit (id uuid PRIMARY KEY DEFAULT gen_random_uuid(),appointment_id uuid NOT NULL REFERENCES appointments(id) ON DELETE CASCADE,action varchar(30) NOT NULL,previous_data jsonb,new_data jsonb,user_id uuid REFERENCES users(id),created_at timestamptz NOT NULL DEFAULT now());
+CREATE INDEX IF NOT EXISTS appointment_audit_appointment_idx ON appointment_audit(appointment_id,created_at DESC);

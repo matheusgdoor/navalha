@@ -1,0 +1,152 @@
+.adminCenter {
+  min-height: 100vh;
+  background: var(--paper);
+  padding: 35px 5%;
+}
+.adminCenterGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 17px;
+}
+.adminCenter .adminForm {
+  max-width: none;
+}
+.adminCenter h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.adminCenter h2 svg {
+  width: 19px;
+  color: #ad7631;
+}
+.adminCenter select {
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #fff;
+  padding: 0 8px;
+}
+.systemStatus,
+.exports,
+.auditPanel {
+  padding: 22px;
+}
+.statusLine {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid var(--line);
+  padding: 14px 0;
+}
+.statusLine > span {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #edf0eb;
+}
+.statusLine svg {
+  width: 16px;
+}
+.statusLine div {
+  display: grid;
+  flex: 1;
+}
+.statusLine small {
+  font-size: 9px;
+  color: var(--muted);
+}
+.statusLine i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #bb6251;
+}
+.statusLine i.ok {
+  background: #5f8765;
+}
+.exports {
+  margin-top: 17px;
+}
+.optionalModules {
+  padding: 22px;
+  margin-top: 17px;
+}
+.optionalModules > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid var(--line);
+  padding-top: 13px;
+}
+.optionalModules span {
+  display: grid;
+  flex: 1;
+}
+.optionalModules small {
+  color: var(--muted);
+  font-size: 9px;
+}
+.optionalModules button {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 15px;
+  padding: 6px 10px;
+  font-size: 9px;
+}
+.optionalModules button.enabled {
+  background: #e3ece4;
+  color: #55705a;
+}
+.exports a {
+  display: inline-flex;
+  margin: 5px 6px 0 0;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  text-decoration: none;
+  color: #825b2b;
+  font-size: 10px;
+}
+.auditPanel {
+  margin-top: 17px;
+}
+.auditPanel article {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+.auditAction {
+  font-size: 8px;
+  background: #f1e7d8;
+  color: #8c622d;
+  padding: 5px 8px;
+  border-radius: 12px;
+}
+.auditPanel article div {
+  display: grid;
+  flex: 1;
+}
+.auditPanel article b {
+  font-size: 11px;
+}
+.auditPanel article small,
+.auditPanel time {
+  font-size: 9px;
+  color: var(--muted);
+}
+@media (max-width: 750px) {
+  .adminCenter {
+    padding: 22px 14px;
+  }
+  .adminCenterGrid {
+    grid-template-columns: 1fr;
+  }
+  .auditPanel time {
+    display: none;
+  }
+}

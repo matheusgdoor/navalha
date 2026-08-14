@@ -1,0 +1,167 @@
+.publicBooking {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  background: #f5f3ee;
+}
+.publicIntro {
+  background: #20241f;
+  color: #fff;
+  padding: 55px 12%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.publicIntro p,
+.publicForm > p {
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: #c18a43;
+  font-weight: 700;
+}
+.publicIntro h1 {
+  font: 600 48px/1.1 "Playfair Display";
+  margin: 14px 0;
+}
+.publicIntro > div:last-child small {
+  color: #adb1a7;
+  line-height: 1.7;
+}
+.publicFormArea {
+  padding: 40px;
+  display: grid;
+  place-items: center;
+}
+.publicForm {
+  width: min(620px, 100%);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 30px;
+}
+.publicForm h2 {
+  font: 600 27px "Playfair Display";
+  margin: 6px 0 22px;
+}
+.publicForm label {
+  display: grid;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.publicForm input,
+.publicForm select {
+  height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0 10px;
+  background: #fff;
+  font: inherit;
+}
+.publicInput {
+  display: flex;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  align-items: center;
+  padding-left: 10px;
+}
+.publicInput svg {
+  width: 16px;
+  color: #a7773b;
+}
+.publicInput input {
+  border: 0;
+  width: 100%;
+}
+.slotGroup > b {
+  font-size: 10px;
+}
+.slotGroup > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 8px 0 16px;
+}
+.slotGroup button {
+  height: 33px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #fff;
+  padding: 0 9px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+.slotGroup button svg {
+  width: 13px;
+}
+.slotGroup button.selected {
+  background: #ad7631;
+  color: #fff;
+  border-color: #ad7631;
+}
+.slotGroup small {
+  color: var(--muted);
+}
+.publicDivider {
+  border-top: 1px solid var(--line);
+  margin: 8px 0 18px;
+}
+.publicSubmit {
+  width: 100%;
+  height: 44px;
+  border: 0;
+  border-radius: 5px;
+  background: #ad7631;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.publicSuccess {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  background: #f5f3ee;
+}
+.publicSuccess > span {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  background: #e1ece2;
+  color: #55705a;
+  display: grid;
+  place-items: center;
+  margin: auto;
+}
+.publicSuccess h1 {
+  font: 600 34px "Playfair Display";
+  margin-bottom: 5px;
+}
+.publicSuccess p {
+  color: var(--muted);
+}
+.publicSuccess a {
+  color: #a36e2e;
+  font-weight: 600;
+}
+@media (max-width: 760px) {
+  .publicBooking {
+    grid-template-columns: 1fr;
+  }
+  .publicIntro {
+    padding: 25px;
+    min-height: 180px;
+  }
+  .publicIntro h1 {
+    font-size: 30px;
+  }
+  .publicFormArea {
+    padding: 15px;
+  }
+  .publicForm {
+    padding: 22px;
+  }
+}

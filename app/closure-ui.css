@@ -1,0 +1,11 @@
+.closeCommission {
+  display: block;
+  margin: 4px 0 0 auto;
+  border: 0;
+  background: #e5eee5;
+  color: #52715a;
+  border-radius: 4px;
+  padding: 4px 7px;
+  font-size: 8px;
+  cursor: pointer;
+}

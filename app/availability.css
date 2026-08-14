@@ -1,0 +1,92 @@
+.availabilityPage {
+  min-height: 100vh;
+  padding: 35px 5%;
+  background: var(--paper);
+}
+.backLink {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #777;
+  text-decoration: none;
+  font-size: 11px;
+  margin-bottom: 25px;
+}
+.backLink svg {
+  width: 16px;
+}
+.publicLink {
+  text-decoration: none;
+}
+.availabilityGrid {
+  display: grid;
+  grid-template-columns: 0.7fr 1.3fr;
+  gap: 17px;
+}
+.availabilityPage select {
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #fff;
+  padding: 0 9px;
+}
+.availabilityList,
+.messageQueue {
+  padding: 23px;
+}
+.availabilityList h2,
+.messageQueue h2 {
+  font: 600 19px "Playfair Display";
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 0;
+}
+.availabilityList h2 svg,
+.messageQueue h2 svg {
+  width: 18px;
+  color: #ad7631;
+}
+.availabilityList article,
+.messageQueue article {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 0;
+  border-top: 1px solid var(--line);
+}
+.availabilityList article div,
+.messageQueue article div {
+  display: grid;
+  flex: 1;
+}
+.availabilityList small,
+.messageQueue small,
+.messageQueue > p {
+  font-size: 10px;
+  color: var(--muted);
+}
+.availabilityList span,
+.messageQueue time {
+  font-size: 10px;
+  text-align: right;
+  color: #777;
+}
+.messageQueue {
+  margin-top: 17px;
+}
+.queueStatus {
+  font-size: 8px;
+  background: #f5ead8;
+  color: #936725;
+  border-radius: 15px;
+  padding: 5px 8px;
+}
+@media (max-width: 760px) {
+  .availabilityPage {
+    padding: 22px 14px;
+  }
+  .availabilityGrid {
+    grid-template-columns: 1fr;
+  }
+}

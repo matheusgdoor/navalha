@@ -1,0 +1,108 @@
+.publicCatalogState {
+  display: grid;
+  gap: 5px;
+  padding: 13px;
+  background: #f4eadc;
+  color: #79592f;
+  border-radius: 5px;
+  font-size: 10px;
+  margin-bottom: 13px;
+}
+.publicCatalogState span {
+  font-size: 9px;
+  color: #766d61;
+}
+.barberChoice {
+  margin-bottom: 14px;
+}
+.barberChoice > b {
+  font-size: 10px;
+}
+.barberChoice > div {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-top: 7px;
+}
+.barberChoice button {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  padding: 9px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  text-align: left;
+}
+.barberChoice button.selected {
+  border-color: #ad7631;
+  background: #fcf8f2;
+}
+.barberChoice button > i {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-style: normal;
+  font-size: 9px;
+}
+.barberChoice button > span {
+  display: grid;
+}
+.barberChoice strong {
+  font-size: 10px;
+}
+.barberChoice small {
+  font-size: 8px;
+  color: var(--muted);
+}
+.slotGroup button.available {
+  border-color: #b9d0bc;
+  background: #f5faf5;
+}
+.slotGroup button.reserved,
+.slotGroup button.blocked {
+  opacity: 0.62;
+  cursor: not-allowed;
+}
+.slotGroup button.reserved {
+  background: #ececea;
+  text-decoration: line-through;
+}
+.slotGroup button.blocked {
+  background: #f3e5e2;
+  color: #965b52;
+}
+.slotLegend {
+  display: flex;
+  gap: 13px;
+  margin: -8px 0 16px;
+  font-size: 8px;
+  color: var(--muted);
+}
+.slotLegend span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.slotLegend i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.slotLegend .available {
+  background: #67906d;
+}
+.slotLegend .reserved {
+  background: #999;
+}
+.slotLegend .blocked {
+  background: #b26052;
+}
+@media (max-width: 520px) {
+  .barberChoice > div {
+    grid-template-columns: 1fr;
+  }
+}

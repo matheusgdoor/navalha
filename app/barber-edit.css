@@ -1,0 +1,42 @@
+.teamCard {
+  grid-template-columns: 40px 1fr auto auto;
+}
+.editBarber {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 4px;
+  padding: 6px 9px;
+  font-size: 9px;
+  cursor: pointer;
+}
+.editFormTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.editFormTitle button {
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.editFormTitle svg {
+  width: 18px;
+}
+.activeCheck {
+  display: flex !important;
+  grid-template-columns: 18px 1fr !important;
+  align-items: center;
+  margin: 8px 0 16px !important;
+}
+.activeCheck input {
+  width: 16px;
+  height: 16px;
+}
+@media (max-width: 600px) {
+  .teamCard {
+    grid-template-columns: 40px 1fr auto;
+  }
+  .teamCard > strong {
+    display: none;
+  }
+}

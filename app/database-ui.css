@@ -1,0 +1,58 @@
+.loading,
+.emptyState {
+  padding: 40px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+}
+.systemError {
+  background: #f8e8e4;
+  color: #93483c;
+  padding: 12px 15px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+.rowActions {
+  display: flex;
+  gap: 5px;
+  justify-content: flex-end;
+}
+.rowActions button {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 4px;
+  padding: 5px 7px;
+  font-size: 8px;
+  cursor: pointer;
+}
+.rowActions button:first-child {
+  color: #52715a;
+  background: #e8f0e8;
+}
+.rowActions button:last-child {
+  color: #9a5145;
+}
+.actionsRow {
+  grid-template-columns: 100px 1.2fr 1.2fr 0.7fr 85px 115px;
+}
+.profile button {
+  border: 0;
+  background: none;
+  color: #aaa;
+  cursor: pointer;
+}
+.modal .submit:disabled {
+  opacity: 0.6;
+}
+.financeMetrics .metric {
+  min-height: 92px;
+}
+@media (max-width: 900px) {
+  .actionsRow {
+    grid-template-columns: 70px 1fr 1fr 105px;
+  }
+  .actionsRow > :nth-child(4),
+  .actionsRow > :nth-child(5) {
+    display: none;
+  }
+}

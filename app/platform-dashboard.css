@@ -1,0 +1,612 @@
+.platformTop {
+  display: flex;
+  justify-content: space-between;
+}
+.platformLogout {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.managementHead > time {
+  font-size: 10px;
+  color: var(--muted);
+}
+.saasKpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.saasKpis article {
+  padding: 19px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.saasKpis > article > span {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+.saasKpis span svg {
+  width: 18px;
+}
+.saasKpis .green {
+  background: #e4eee5;
+  color: #55705a;
+}
+.saasKpis .gold {
+  background: #f4e7d4;
+  color: #a8773a;
+}
+.saasKpis .blue {
+  background: #e3ebef;
+  color: #547285;
+}
+.saasKpis .red {
+  background: #f3e1df;
+  color: #99514a;
+}
+.saasKpis article > div {
+  display: grid;
+}
+.saasKpis strong {
+  font: 600 23px "Playfair Display";
+}
+.saasKpis p {
+  font-size: 8px;
+  color: var(--muted);
+  margin: 3px 0;
+}
+.platformInsights {
+  display: grid;
+  grid-template-columns: 1.35fr 0.65fr;
+  gap: 14px;
+  margin-top: 14px;
+}
+.billingMonitor {
+  margin-top: 14px;
+  padding: 20px;
+}
+.billingMonitorHead,
+.billingMonitorHead > span,
+.billingMonitorHead > div {
+  display: flex;
+  align-items: center;
+}
+.billingMonitorHead {
+  justify-content: space-between;
+  gap: 15px;
+}
+.billingMonitorHead > span {
+  gap: 10px;
+}
+.billingMonitorHead svg {
+  width: 38px;
+  height: 38px;
+  padding: 9px;
+  border-radius: 50%;
+  background: #f4e7d4;
+  color: #a8773a;
+}
+.billingMonitorHead p {
+  margin: 0;
+  color: #a8773a;
+  font-size: 8px;
+  letter-spacing: 1.5px;
+}
+.billingMonitorHead h2 {
+  margin: 3px 0 0;
+  font: 600 19px "Playfair Display";
+}
+.billingMonitorHead > div {
+  gap: 6px;
+  font-size: 9px;
+  color: var(--muted);
+}
+.billingMonitorHead > div b {
+  margin-left: 10px;
+  color: #20281f;
+  font-size: 16px;
+}
+.billingWatchList {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 15px;
+}
+.billingWatchList > button {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  text-align: left;
+}
+.billingWatchList span {
+  display: grid;
+}
+.billingWatchList span:last-child {
+  text-align: right;
+}
+.billingWatchList small {
+  margin-top: 2px;
+  font-size: 7px;
+  color: var(--muted);
+}
+.billingWatchList .soon b {
+  color: #a06d2f;
+}
+.billingWatchList .overdue b {
+  color: #a34f45;
+}
+.platformModal input {
+  height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #fff;
+  padding: 0 10px;
+}
+.platformPayments {
+  margin-top: 14px;
+  padding: 20px;
+}
+.platformPaymentsHead,
+.platformPaymentsHead > span,
+.platformPaymentsHead > div {
+  display: flex;
+  align-items: center;
+}
+.platformPaymentsHead {
+  justify-content: space-between;
+  gap: 18px;
+}
+.platformPaymentsHead > span {
+  gap: 10px;
+}
+.platformPaymentsHead > span > svg {
+  width: 38px;
+  height: 38px;
+  padding: 9px;
+  border-radius: 50%;
+  background: #e3eee8;
+  color: #4f8069;
+}
+.platformPaymentsHead p {
+  margin: 0;
+  color: #4f8069;
+  font-size: 8px;
+  letter-spacing: 1.5px;
+}
+.platformPaymentsHead h2 {
+  margin: 3px 0 0;
+  font: 600 19px "Playfair Display";
+}
+.platformPaymentsHead > div {
+  gap: 18px;
+}
+.platformPaymentsHead > div > span {
+  display: grid;
+}
+.platformPaymentsHead small {
+  color: var(--muted);
+  font-size: 7px;
+}
+.platformPaymentsHead b {
+  font: 600 14px "Playfair Display";
+}
+.paymentTable {
+  margin-top: 15px;
+  overflow-x: auto;
+}
+.paymentTable > div:first-child,
+.paymentTable article {
+  min-width: 680px;
+  display: grid;
+  grid-template-columns: 1.4fr 0.6fr 0.7fr 0.8fr 0.6fr;
+  gap: 12px;
+  align-items: center;
+}
+.paymentTable > div:first-child {
+  padding: 9px;
+  background: #f7f5f0;
+  color: var(--muted);
+  font-size: 7px;
+  text-transform: uppercase;
+}
+.paymentTable article {
+  padding: 11px 9px;
+  border-top: 1px solid var(--line);
+  font-size: 9px;
+}
+.paymentTable article > span:first-child {
+  display: grid;
+}
+.paymentTable article small {
+  color: var(--muted);
+}
+.paymentTable i {
+  width: max-content;
+  padding: 4px 7px;
+  border-radius: 12px;
+  background: #f4e8d7;
+  color: #98682c;
+  font-style: normal;
+}
+.paymentTable i.paid {
+  background: #e3ece4;
+  color: #55705a;
+}
+.paymentTable i.expired,
+.paymentTable i.failed {
+  background: #f3e1df;
+  color: #99514a;
+}
+@media (max-width: 950px) {
+  .billingWatchList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .billingWatchList {
+    grid-template-columns: 1fr;
+  }
+  .billingMonitorHead {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .platformPaymentsHead {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .platformPaymentsHead > div {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.activityChart,
+.planMix {
+  padding: 22px;
+}
+.activityChart p,
+.planMix > p {
+  font-size: 8px;
+  letter-spacing: 1.6px;
+  color: #a8773a;
+}
+.activityChart h2,
+.planMix h2 {
+  font: 600 19px "Playfair Display";
+  margin: 4px 0 15px;
+}
+.activityBars {
+  height: 145px;
+  display: flex;
+  align-items: flex-end;
+  gap: 13px;
+}
+.activityBars article {
+  height: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+.activityBars i {
+  width: 65%;
+  max-width: 34px;
+  background: #c49355;
+  border-radius: 3px 3px 0 0;
+  min-height: 8px;
+}
+.activityBars b {
+  font-size: 8px;
+  margin-bottom: 4px;
+}
+.activityBars small {
+  font-size: 7px;
+  color: var(--muted);
+  margin-top: 5px;
+}
+.planMix article {
+  display: grid;
+  grid-template-columns: 1fr 30px;
+  gap: 4px;
+  border-top: 1px solid var(--line);
+  padding: 10px 0;
+}
+.planMix article > span {
+  display: grid;
+}
+.planMix small {
+  font-size: 8px;
+  color: var(--muted);
+}
+.planMix strong {
+  text-align: right;
+}
+.planMix i {
+  grid-column: 1/-1;
+  height: 4px;
+  background: #eeeae3;
+}
+.planMix em {
+  display: block;
+  height: 100%;
+  background: #a9783b;
+}
+.readinessCompact {
+  padding: 15px 19px;
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 18px;
+  align-items: center;
+}
+.readinessCompact > div:first-child {
+  display: flex;
+  gap: 10px;
+}
+.readinessCompact svg {
+  color: #a8773a;
+}
+.readinessCompact span {
+  display: grid;
+}
+.readinessCompact small {
+  font-size: 8px;
+  color: var(--muted);
+}
+.readinessCompact > div:nth-child(2) {
+  display: flex;
+  gap: 5px;
+}
+.readinessCompact > div:nth-child(2) > span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #b85f51;
+}
+.readinessCompact > div:nth-child(2) > span.ok {
+  background: #5d8162;
+}
+.readinessCompact > strong {
+  font-size: 9px;
+  color: #99514a;
+}
+.readinessCompact > strong.ready {
+  color: #55705a;
+}
+.platformRequests h2 > span {
+  font: 600 9px "DM Sans";
+  background: #b57b33;
+  color: #fff;
+  border-radius: 12px;
+  padding: 3px 7px;
+}
+.orgFilters {
+  display: flex;
+  gap: 8px;
+}
+.orgFilters > select {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 5px;
+  padding: 0 8px;
+}
+.orgTable article {
+  cursor: pointer;
+}
+.orgTable article:hover {
+  background: #fbfaf7;
+}
+.orgTable article > button {
+  color: #8c622d;
+}
+.platformModal {
+  position: fixed;
+  inset: 0;
+  background: #0008;
+  display: grid;
+  place-items: center;
+  z-index: 50;
+  padding: 20px;
+}
+.platformModal > section {
+  width: min(500px, 100%);
+  max-height: calc(100dvh - 40px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 27px;
+  position: relative;
+  scrollbar-width: thin;
+  scrollbar-color: #c9b99f transparent;
+}
+.modalClose {
+  position: sticky;
+  z-index: 3;
+  float: right;
+  right: 0;
+  top: 0;
+  border: 0;
+  background: none;
+}
+.modalClose svg {
+  width: 18px;
+}
+.platformModal p {
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: #a8773a;
+}
+.platformModal h2 {
+  font: 600 25px "Playfair Display";
+  margin: 5px 0;
+}
+.platformModal > a {
+  display: flex;
+  gap: 4px;
+  color: #95662d;
+  font-size: 9px;
+}
+.platformModal > a svg {
+  width: 12px;
+}
+.companyStats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 18px 0;
+}
+.companyStats > span {
+  display: grid;
+  background: #f7f5f0;
+  padding: 12px;
+}
+.companyStats small {
+  color: var(--muted);
+  font-size: 8px;
+}
+.companyStats b {
+  font: 600 17px "Playfair Display";
+}
+.platformModal label {
+  display: grid;
+  gap: 5px;
+  font-size: 9px;
+}
+.platformModal select {
+  height: 38px;
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 5px;
+}
+.saveCompany,
+.dangerCompany,
+.reactivateCompany {
+  width: 100%;
+  height: 38px;
+  border-radius: 5px;
+  margin-top: 9px;
+}
+.saveCompany {
+  border: 0;
+  background: #b57b33;
+  color: #fff;
+}
+.dangerCompany {
+  border: 1px solid #d8b5b0;
+  background: #fff;
+  color: #99514a;
+}
+.reactivateCompany {
+  border: 1px solid #a9cbb4;
+  background: #edf7f0;
+  color: #477359;
+}
+.dangerCompany,
+.reactivateCompany {
+  position: sticky;
+  z-index: 2;
+  bottom: -1px;
+  box-shadow: 0 -8px 14px #ffffff;
+}
+.suspensionReason {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.suspensionReason textarea {
+  min-height: 70px;
+  resize: vertical;
+  padding: 9px;
+  border: 1px solid #dfc4c0;
+  border-radius: 5px;
+  font: inherit;
+}
+.currentSuspensionReason {
+  display: grid;
+  gap: 3px;
+  margin-top: 14px;
+  padding: 11px;
+  border-radius: 5px;
+  background: #f8e9e6;
+  color: #864b43;
+}
+.currentSuspensionReason small {
+  font-size: 7px;
+  letter-spacing: 1px;
+}
+.suspensionInlineError {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 5px;
+  background: #fff0ee;
+  color: #984b43;
+  font-size: 9px;
+}
+.dangerCompany:disabled,
+.reactivateCompany:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+@media (max-height: 760px) {
+  .platformModal {
+    padding: 10px;
+  }
+  .platformModal > section {
+    max-height: calc(100dvh - 20px);
+    padding: 20px 24px;
+  }
+  .companyStats {
+    margin: 10px 0;
+  }
+  .companyStats > span {
+    padding: 8px 11px;
+  }
+  .suspensionReason {
+    margin-top: 10px;
+    padding-top: 9px;
+  }
+  .suspensionReason textarea {
+    min-height: 55px;
+  }
+}
+@media (max-width: 950px) {
+  .saasKpis {
+    grid-template-columns: 1fr 1fr;
+  }
+  .platformInsights {
+    grid-template-columns: 1fr;
+  }
+  .readinessCompact {
+    grid-template-columns: 1fr;
+  }
+  .organizationsHead {
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .orgFilters {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .orgFilters label {
+    flex: 1;
+  }
+}
+@media (max-width: 600px) {
+  .saasKpis {
+    grid-template-columns: 1fr;
+  }
+  .platformPage {
+    padding: 22px 14px;
+  }
+  .managementHead > time {
+    display: none;
+  }
+}

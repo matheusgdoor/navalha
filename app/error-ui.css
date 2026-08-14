@@ -1,0 +1,47 @@
+.fatalError {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  background: var(--paper);
+  padding: 25px;
+}
+.fatalError > span {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  margin: auto;
+  background: #f2e5dc;
+  color: #a15e49;
+}
+.fatalError h1 {
+  font: 600 32px "Playfair Display";
+  margin: 18px 0 5px;
+}
+.fatalError p {
+  color: var(--muted);
+}
+.fatalError button,
+.fatalError a {
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  border-radius: 5px;
+  background: #ad7631;
+  color: #fff;
+  padding: 11px 16px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.fatalError button svg,
+.fatalError a svg {
+  width: 16px;
+}
+.fatalError small {
+  margin-top: 15px;
+  color: #aaa;
+}

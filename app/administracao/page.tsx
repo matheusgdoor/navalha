@@ -1,0 +1,249 @@
+"use client";
+import { FormEvent, useCallback, useEffect, useState } from "react";
+import {
+  ArrowLeft,
+  CheckCircle2,
+  Database,
+  Download,
+  FileClock,
+  MessageCircle,
+  Settings2,
+} from "lucide-react";
+import { maskDocument, maskPhone } from "@/lib/masks";
+export default function AdminCenter() {
+  const [settings, setSettings] = useState<any>(null),
+    [audit, setAudit] = useState<any[]>([]),
+    [health, setHealth] = useState<any>(null),
+    [wa, setWa] = useState<any>(null),
+    [features, setFeatures] = useState<any>(null),
+    [message, setMessage] = useState("");
+  const load = useCallback(
+    () =>
+      Promise.all([
+        fetch("/api/settings").then((r) => r.json()),
+        fetch("/api/audit?limit=50").then((r) => r.json()),
+        fetch("/api/health").then((r) => r.json()),
+        fetch("/api/whatsapp/status").then((r) => r.json()),
+        fetch("/api/features").then((r) => r.json()),
+      ]).then(([s, a, h, w, f]) => {
+        setSettings(s);
+        setAudit(Array.isArray(a) ? a : []);
+        setHealth(h);
+        setWa(w);
+        setFeatures(f);
+      }),
+    [],
+  );
+  useEffect(() => {
+    load();
+  }, [load]);
+  async function save(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const f = Object.fromEntries(new FormData(e.currentTarget)),
+      r = await fetch("/api/settings", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(f),
+      }),
+      x = await r.json();
+    setMessage(r.ok ? "Dados da barbearia atualizados." : x.error);
+    if (r.ok) setSettings(x);
+  }
+  async function toggleInventory() {
+    const response = await fetch("/api/features", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ inventorySales: !features?.inventorySales }),
+    });
+    const result = await response.json();
+    if (response.ok) {
+      setFeatures(result);
+      setMessage(
+        result.inventorySales
+          ? "Módulo de produtos ativado."
+          : "Módulo de produtos ocultado.",
+      );
+    } else setMessage(result.error);
+  }
+  if (!settings)
+    return (
+      <main className="adminCenter">
+        <div className="loading">Carregando central...</div>
+      </main>
+    );
+  return (
+    <main className="adminCenter">
+      <a className="backLink" href="/app">
+        <ArrowLeft />
+        Voltar ao painel
+      </a>
+      <div className="managementHead">
+        <div>
+          <p>ADMINISTRAÇÃO</p>
+          <h1>Central do sistema</h1>
+          <small>Configuração, exportação, diagnóstico e auditoria.</small>
+        </div>
+      </div>
+      <section className="adminCenterGrid">
+        <form className="panel adminForm" onSubmit={save}>
+          <h2>
+            <Settings2 />
+            Dados da barbearia
+          </h2>
+          <Field name="name" label="Nome" value={settings.name} />
+          <Field name="phone" label="Telefone" value={settings.phone} />
+          <Field
+            name="document"
+            label="CPF ou CNPJ"
+            value={settings.document}
+          />
+          <Field
+            name="email"
+            label="E-mail"
+            type="email"
+            value={settings.email}
+          />
+          <Field name="address" label="Endereço" value={settings.address} />
+          <label>
+            Fuso horário
+            <select name="timezone" defaultValue={settings.timezone}>
+              <option>America/Cuiaba</option>
+              <option>America/Sao_Paulo</option>
+              <option>America/Manaus</option>
+              <option>America/Rio_Branco</option>
+            </select>
+          </label>
+          <Field
+            name="cancellationNoticeHours"
+            label="Antecedência para cancelar ou reagendar (horas)"
+            type="number"
+            value={String(settings.cancellationNoticeHours ?? 2)}
+          />
+          {message && <div className="adminMessage">{message}</div>}
+          <button className="submit">Salvar configurações</button>
+        </form>
+        <div>
+          <section className="panel systemStatus">
+            <h2>Estado do sistema</h2>
+            <Status
+              icon={<Database />}
+              name="PostgreSQL"
+              ok={health?.database === "connected"}
+            />
+            <Status
+              icon={<MessageCircle />}
+              name="WhatsApp"
+              ok={wa?.configured}
+              detail={wa?.configured ? "Configurado" : "Aguardando credenciais"}
+            />
+            <Status icon={<CheckCircle2 />} name="Aplicação" ok={true} />
+          </section>
+          <section className="panel exports">
+            <h2>
+              <Download />
+              Exportar dados
+            </h2>
+            <a href="/assinatura">Plano e assinatura</a>
+            <a href="/usuarios">Usuários e acessos</a>
+            <a href="/vendas">Produtos, estoque e vendas</a>
+            <a href="/api/export/clientes">Clientes.csv</a>
+            <a href="/api/export/agenda">Agenda.csv</a>
+            <a href="/api/export/financeiro">Financeiro.csv</a>
+          </section>
+          <section className="panel optionalModules">
+            <h2>Recursos opcionais</h2>
+            <div>
+              <span>
+                <b>Produtos, bebidas e estoque</b>
+                <small>Venda itens no balcão e controle quantidades.</small>
+              </span>
+              <button
+                className={features?.inventorySales ? "enabled" : ""}
+                onClick={toggleInventory}
+              >
+                {features?.inventorySales ? "Ativado" : "Ativar"}
+              </button>
+            </div>
+          </section>
+        </div>
+      </section>
+      <section className="panel auditPanel">
+        <h2>
+          <FileClock />
+          Auditoria de agendamentos
+        </h2>
+        {audit.length ? (
+          audit.map((x) => (
+            <article key={x.id}>
+              <span className="auditAction">{x.action}</span>
+              <div>
+                <b>{x.client}</b>
+                <small>
+                  {x.service} · {x.barber} · por {x.user_name || "Sistema"}
+                </small>
+              </div>
+              <time>{new Date(x.createdAt).toLocaleString("pt-BR")}</time>
+            </article>
+          ))
+        ) : (
+          <div className="emptyState">Nenhuma alteração auditada.</div>
+        )}
+      </section>
+    </main>
+  );
+}
+function Field({
+  name,
+  label,
+  type = "text",
+  value,
+}: {
+  name: string;
+  label: string;
+  type?: string;
+  value?: string;
+}) {
+  return (
+    <label>
+      {label}
+      <input
+        name={name}
+        type={type}
+        defaultValue={value || ""}
+        inputMode={
+          name === "phone" ? "tel" : name === "document" ? "numeric" : undefined
+        }
+        onChange={
+          name === "phone"
+            ? (e) => (e.currentTarget.value = maskPhone(e.currentTarget.value))
+            : name === "document"
+              ? (e) =>
+                  (e.currentTarget.value = maskDocument(e.currentTarget.value))
+              : undefined
+        }
+      />
+    </label>
+  );
+}
+function Status({
+  icon,
+  name,
+  ok,
+  detail,
+}: {
+  icon: any;
+  name: string;
+  ok: boolean;
+  detail?: string;
+}) {
+  return (
+    <div className="statusLine">
+      <span>{icon}</span>
+      <div>
+        <b>{name}</b>
+        <small>{detail || (ok ? "Operacional" : "Indisponível")}</small>
+      </div>
+      <i className={ok ? "ok" : ""} />
+    </div>
+  );
+}

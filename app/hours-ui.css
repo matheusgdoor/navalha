@@ -1,0 +1,66 @@
+.hoursPanel {
+  padding: 22px;
+  margin-bottom: 17px;
+}
+.hoursTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.hoursTitle h2 {
+  font: 600 19px "Playfair Display";
+  display: flex;
+  gap: 8px;
+}
+.hoursTitle select {
+  min-width: 160px;
+}
+.hourRow {
+  display: grid;
+  grid-template-columns: 1fr 90px 100px 25px 100px 60px;
+  align-items: center;
+  gap: 9px;
+  border-top: 1px solid var(--line);
+  padding: 9px 0;
+}
+.hourRow b {
+  font-size: 11px;
+}
+.hourRow label {
+  font-size: 9px;
+}
+.hourRow input[type="time"] {
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0 5px;
+}
+.hourRow button,
+.deleteBlock {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 4px;
+  padding: 6px;
+  cursor: pointer;
+}
+.deleteBlock {
+  color: #a45749;
+}
+.deleteBlock svg {
+  width: 14px;
+  height: 14px;
+}
+@media (max-width: 650px) {
+  .hourRow {
+    grid-template-columns: 1fr 70px 85px 15px 85px;
+  }
+  .hourRow button {
+    grid-column: 1/-1;
+  }
+  .hoursTitle {
+    align-items: start;
+    flex-direction: column;
+    gap: 8px;
+  }
+}

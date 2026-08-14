@@ -1,0 +1,259 @@
+.customerLogin {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 80% 10%, #e9d6bd, transparent 30%), #f5f3ee;
+}
+.customerLogo {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #20281f;
+  color: #d49a50;
+}
+.customerLogo svg {
+  width: 20px;
+}
+.devCode {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: #f4e7d4;
+  color: #835e30;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 10px;
+}
+.devCode svg {
+  width: 15px;
+}
+.customerSecondary {
+  background: #fff !important;
+  color: #72532e !important;
+  border: 1px solid var(--line) !important;
+}
+.customerPortal {
+  min-height: 100vh;
+  background: var(--paper);
+  padding-bottom: 60px;
+}
+.customerPortal > header {
+  margin: 0;
+  background: #20281f;
+  color: #fff;
+  padding: 0 7%;
+  display: flex;
+  justify-content: space-between;
+}
+.customerPortal > header > div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.customerPortal > header > div > span {
+  display: grid;
+}
+.customerPortal > header small {
+  font-size: 8px;
+  color: #aaa;
+}
+.customerPortal > header a {
+  background: #b77b33;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 14px;
+  border-radius: 5px;
+  font-size: 9px;
+}
+.customerWelcome,
+.customerAppointments,
+.customerHistory,
+.customerPortal > .subscriptionMessage {
+  width: min(900px, 90%);
+  margin-left: auto;
+  margin-right: auto;
+}
+.customerWelcome {
+  padding: 50px 0 25px;
+}
+.customerWelcome p {
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: #a8773a;
+}
+.customerWelcome h1 {
+  font: 600 35px "Playfair Display";
+  margin: 7px 0;
+}
+.customerWelcome small {
+  color: var(--muted);
+}
+.customerAppointments h2,
+.customerHistory h2 {
+  font: 600 20px "Playfair Display";
+}
+.customerAppointments article {
+  padding: 17px;
+  display: grid;
+  grid-template-columns: 160px 1fr 90px 190px;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+.customerAppointments article > span,
+.customerAppointments article > strong {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.customerAppointments svg {
+  width: 16px;
+  color: #a8773a;
+}
+.customerAppointments h3 {
+  font: 600 17px "Playfair Display";
+  margin: 0;
+}
+.customerAppointments small {
+  color: var(--muted);
+}
+.customerAppointments button {
+  border: 1px solid #e0c2bd;
+  background: #fff;
+  color: #985a50;
+  border-radius: 5px;
+  padding: 7px;
+  display: flex;
+  gap: 4px;
+}
+.customerActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+.customerAppointments .rescheduleButton {
+  border-color: #d7c5a9;
+  color: #78572e;
+}
+.customerModalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(23, 29, 22, 0.58);
+  backdrop-filter: blur(3px);
+}
+.customerModal {
+  position: relative;
+  width: min(520px, 100%);
+  padding: 28px;
+}
+.customerModal > p {
+  margin: 0;
+  color: #a8773a;
+  font-size: 8px;
+  letter-spacing: 2px;
+}
+.customerModal h2 {
+  margin: 7px 0;
+  font: 600 25px "Playfair Display";
+}
+.customerModal > small {
+  display: block;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+.customerModal label {
+  display: grid;
+  gap: 7px;
+  font-size: 10px;
+}
+.customerModal input {
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 11px;
+  background: #fff;
+}
+.customerModalClose {
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+}
+.customerModalClose svg {
+  width: 18px;
+}
+.customerSlots {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+}
+.customerSlots button {
+  display: grid;
+  gap: 2px;
+  padding: 10px 5px;
+  border: 1px solid #d2b98f;
+  border-radius: 5px;
+  background: #fffaf3;
+  color: #664820;
+}
+.customerSlots button small {
+  font-size: 7px;
+  color: #71906c;
+}
+.customerSlots button:disabled {
+  opacity: 0.45;
+  background: #eee;
+  border-color: #ddd;
+}
+.customerHistory {
+  margin-top: 30px;
+}
+.customerHistory article {
+  display: grid;
+  grid-template-columns: 110px 1fr 1fr 90px;
+  border-top: 1px solid var(--line);
+  padding: 12px;
+  font-size: 10px;
+}
+.customerHistory small {
+  color: var(--muted);
+}
+.customerHistory i {
+  font-style: normal;
+  text-align: right;
+}
+@media (max-width: 700px) {
+  .customerAppointments article {
+    grid-template-columns: 1fr 80px;
+  }
+  .customerAppointments article > div {
+    grid-column: 1/-1;
+  }
+  .customerHistory article {
+    grid-template-columns: 90px 1fr;
+  }
+  .customerHistory small,
+  .customerHistory i {
+    display: none;
+  }
+  .customerActions {
+    grid-column: 1/-1;
+    justify-content: stretch;
+  }
+  .customerActions button {
+    flex: 1;
+    justify-content: center;
+  }
+  .customerSlots {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

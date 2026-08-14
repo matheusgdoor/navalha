@@ -1,0 +1,3 @@
+CREATE TABLE IF NOT EXISTS customer_access_codes(id uuid PRIMARY KEY DEFAULT gen_random_uuid(),organization_id uuid NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,client_id uuid NOT NULL REFERENCES clients(id) ON DELETE CASCADE,code_hash text NOT NULL,expires_at timestamptz NOT NULL,used_at timestamptz,attempts integer NOT NULL DEFAULT 0,created_at timestamptz NOT NULL DEFAULT now());
+CREATE INDEX IF NOT EXISTS customer_codes_client_idx ON customer_access_codes(client_id,created_at DESC);
+ALTER TABLE business_settings ADD COLUMN IF NOT EXISTS cancellation_notice_hours integer NOT NULL DEFAULT 2 CHECK(cancellation_notice_hours>=0 AND cancellation_notice_hours<=168);

@@ -1,0 +1,329 @@
+.subscriptionPage {
+  min-height: 100vh;
+  background: var(--paper);
+  padding: 35px 6%;
+}
+.subscriptionStatus {
+  padding: 7px 12px;
+  border-radius: 18px;
+  font-size: 10px;
+  background: #e3ece4;
+  color: #55705a;
+}
+.subscriptionStatus.trial {
+  background: #f4e8d7;
+  color: #98682c;
+}
+.currentPlan {
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 0.6fr 1.4fr;
+  gap: 35px;
+}
+.currentPlan > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.currentPlan > div:first-child > svg {
+  width: 44px;
+  height: 44px;
+  padding: 11px;
+  border-radius: 50%;
+  background: #f2e6d4;
+  color: #a67434;
+}
+.currentPlan span {
+  display: grid;
+}
+.currentPlan h2 {
+  font: 600 25px "Playfair Display";
+  margin: 2px 0;
+}
+.currentPlan p {
+  margin: 0;
+  color: var(--muted);
+}
+.subscriptionTimeline {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 14px 0;
+}
+.subscriptionTimeline article {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 17px;
+}
+.subscriptionTimeline article > svg {
+  width: 36px;
+  height: 36px;
+  padding: 9px;
+  border-radius: 50%;
+  background: #e9f0e8;
+  color: #5f8064;
+}
+.subscriptionTimeline span {
+  display: grid;
+  gap: 2px;
+}
+.subscriptionTimeline small {
+  font-size: 7px;
+  letter-spacing: 1.3px;
+  color: var(--muted);
+}
+.subscriptionTimeline b {
+  font: 600 15px "Playfair Display";
+}
+.subscriptionTimeline em {
+  font-style: normal;
+  font-size: 8px;
+  color: var(--muted);
+}
+.subscriptionTimeline.warning article:nth-child(2) > svg {
+  background: #f7ead7;
+  color: #a26e2e;
+}
+.subscriptionTimeline.expired article:nth-child(2) > svg {
+  background: #f4dfdc;
+  color: #a34f45;
+}
+.billingAlert {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0;
+  padding: 13px 16px;
+  border: 1px solid #e8c996;
+  border-radius: 7px;
+  background: #fff7e8;
+  color: #765126;
+}
+.billingAlert.expired {
+  border-color: #e4b6af;
+  background: #fff0ee;
+  color: #8d443b;
+}
+.billingAlert svg {
+  width: 19px;
+}
+.billingAlert span {
+  display: grid;
+}
+.billingAlert small {
+  margin-top: 2px;
+  color: inherit;
+  opacity: 0.78;
+}
+.pixRenewal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px;
+  margin: 14px 0;
+}
+.pixRenewal > div {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+.pixRenewal > div > svg {
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  border-radius: 50%;
+  background: #dff1ea;
+  color: #31866d;
+}
+.pixRenewal span {
+  display: grid;
+}
+.pixRenewal small {
+  color: #31866d;
+  font-size: 7px;
+  letter-spacing: 1.5px;
+}
+.pixRenewal h2 {
+  margin: 3px 0;
+  font: 600 20px "Playfair Display";
+}
+.pixRenewal p {
+  max-width: 590px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 9px;
+}
+.pixRenewal > button,
+.copyPix {
+  border: 0;
+  border-radius: 5px;
+  padding: 11px 16px;
+  background: #25866c;
+  color: #fff;
+  white-space: nowrap;
+}
+.pixRenewal > button:disabled {
+  opacity: 0.5;
+}
+.pixModalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(24, 30, 23, 0.62);
+  backdrop-filter: blur(3px);
+}
+.pixModal {
+  position: relative;
+  width: min(440px, 100%);
+  padding: 27px;
+  text-align: center;
+}
+.pixModal > p {
+  margin: 0;
+  color: #31866d;
+  font-size: 8px;
+  letter-spacing: 1.8px;
+}
+.pixModal h2 {
+  margin: 5px 0;
+  font: 600 25px "Playfair Display";
+}
+.pixModal > small,
+.pixModal > em {
+  display: block;
+  color: var(--muted);
+  font-size: 8px;
+}
+.pixModal img {
+  width: 190px;
+  height: 190px;
+  margin: 18px auto;
+  border: 8px solid #fff;
+  box-shadow: 0 2px 15px #00000017;
+}
+.pixModal label {
+  display: grid;
+  gap: 6px;
+  text-align: left;
+  font-size: 9px;
+}
+.pixModal textarea {
+  height: 65px;
+  resize: none;
+  padding: 9px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  font-size: 8px;
+}
+.copyPix {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 10px 0;
+}
+.copyPix svg,
+.pixClose svg {
+  width: 16px;
+}
+.pixClose {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  border: 0;
+  background: transparent;
+}
+.usage {
+  display: grid;
+  gap: 12px;
+}
+.usageItem > div {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  margin-bottom: 5px;
+}
+.usageItem > i {
+  display: block;
+  height: 6px;
+  background: #ece9e2;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.usageItem > i > em {
+  display: block;
+  height: 100%;
+  background: #b57b33;
+}
+.plansTitle {
+  font: 600 22px "Playfair Display";
+  margin-top: 28px;
+}
+.plansGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+.planCard {
+  padding: 23px;
+}
+.planCard.selected {
+  border: 2px solid #b77c34;
+}
+.planCard > small {
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: #a36e2e;
+}
+.planCard h2 {
+  font: 600 22px "Playfair Display";
+}
+.planCard strong {
+  font: 600 24px "Playfair Display";
+}
+.planCard em {
+  font: 400 10px "DM Sans";
+  color: var(--muted);
+}
+.planCard p {
+  font-size: 10px;
+  display: flex;
+  gap: 7px;
+}
+.planCard p svg {
+  width: 14px;
+  color: #598060;
+}
+.planCard button {
+  width: 100%;
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #f5f3ee;
+  color: #777;
+  font-size: 9px;
+}
+@media (max-width: 750px) {
+  .subscriptionPage {
+    padding: 22px 14px;
+  }
+  .currentPlan {
+    grid-template-columns: 1fr;
+  }
+  .plansGrid {
+    grid-template-columns: 1fr;
+  }
+  .subscriptionTimeline {
+    grid-template-columns: 1fr;
+  }
+  .pixRenewal {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

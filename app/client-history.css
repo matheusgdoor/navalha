@@ -1,0 +1,70 @@
+.clientHistory {
+  min-height: 100vh;
+  background: var(--paper);
+  padding: 35px 6%;
+}
+.clientSummary {
+  padding: 22px;
+  display: grid;
+  grid-template-columns: 1fr repeat(3, auto);
+  gap: 25px;
+  align-items: center;
+  margin-bottom: 17px;
+}
+.clientSummary > div {
+  display: grid;
+}
+.clientSummary h1 {
+  font: 600 27px "Playfair Display";
+  margin: 0;
+}
+.clientSummary small {
+  color: var(--muted);
+}
+.clientSummary span {
+  display: grid;
+  font-size: 10px;
+  color: var(--muted);
+}
+.clientSummary strong {
+  font: 600 18px "Playfair Display";
+  color: var(--ink);
+}
+.historyTimeline {
+  padding: 22px;
+}
+.historyTimeline h2 {
+  font: 600 20px "Playfair Display";
+}
+.historyItem {
+  display: grid;
+  grid-template-columns: 105px 1fr 1fr 90px 80px;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 0;
+  border-top: 1px solid var(--line);
+  font-size: 11px;
+}
+.historyItem time {
+  color: var(--muted);
+}
+.historyItem strong {
+  text-align: right;
+}
+.editMini {
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 9px;
+}
+@media (max-width: 700px) {
+  .clientSummary {
+    grid-template-columns: 1fr 1fr;
+  }
+  .historyItem {
+    grid-template-columns: 80px 1fr 70px;
+  }
+  .historyItem > :nth-child(3),
+  .historyItem > :nth-child(4) {
+    display: none;
+  }
+}

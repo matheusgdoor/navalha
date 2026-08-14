@@ -1,0 +1,281 @@
+.salesPage {
+  min-height: 100vh;
+  background: var(--paper);
+  padding: 35px 5%;
+}
+.salesMetrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 17px;
+}
+.salesMetrics article {
+  padding: 18px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.salesMetrics svg {
+  color: #a8773a;
+}
+.salesMetrics span {
+  display: grid;
+}
+.salesMetrics b {
+  font: 600 23px "Playfair Display";
+}
+.salesMetrics .warning svg {
+  color: #a35a4e;
+}
+.salesLayout {
+  display: grid;
+  grid-template-columns: 1.45fr 0.55fr;
+  gap: 17px;
+}
+.productCatalog,
+.saleHistory,
+.checkoutBox,
+.newProduct {
+  padding: 20px;
+}
+.productCatalog h2,
+.saleHistory h2,
+.checkoutBox h2,
+.newProduct h2 {
+  font: 600 20px "Playfair Display";
+}
+.productCatalog article {
+  display: grid;
+  grid-template-columns: 1fr 90px 105px 60px 34px;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+.productCatalog article > div:first-child {
+  display: grid;
+}
+.productCatalog small,
+.saleHistory small {
+  color: var(--muted);
+  font-size: 9px;
+}
+.productCatalog article.low {
+  background: #fff8f5;
+}
+.qty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.qty button {
+  width: 25px;
+  height: 25px;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+.qty svg {
+  width: 12px;
+}
+.stockButton {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 4px;
+  padding: 6px;
+  font-size: 9px;
+}
+.editProductButton {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: #fff;
+  color: #79582f;
+}
+.editProductButton svg {
+  width: 13px;
+}
+.productModalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: #17201799;
+  backdrop-filter: blur(3px);
+}
+.productEditModal {
+  position: relative;
+  width: min(470px, 100%);
+  max-height: calc(100dvh - 36px);
+  overflow-y: auto;
+  display: grid;
+  gap: 11px;
+  padding: 25px;
+}
+.productEditModal > p {
+  margin: 0;
+  color: #a8773a;
+  font-size: 8px;
+  letter-spacing: 1.7px;
+}
+.productEditModal h2 {
+  margin: 0 0 5px;
+  font: 600 23px "Playfair Display";
+}
+.productEditModal label {
+  display: grid;
+  gap: 5px;
+  font-size: 9px;
+}
+.productEditModal input {
+  height: 38px;
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+}
+.productEditModal > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.productModalClose {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  border: 0;
+  background: transparent;
+}
+.productModalClose svg,
+.disableProduct svg,
+.enableProduct svg {
+  width: 16px;
+}
+.saveProduct,
+.disableProduct,
+.enableProduct {
+  height: 39px;
+  border-radius: 5px;
+}
+.saveProduct {
+  border: 0;
+  background: #b57b33;
+  color: #fff;
+}
+.disableProduct,
+.enableProduct {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #fff;
+}
+.disableProduct {
+  border: 1px solid #dfb8b2;
+  color: #965148;
+}
+.enableProduct {
+  border: 1px solid #afcbb7;
+  color: #4e745a;
+}
+.saleHistory {
+  margin-top: 17px;
+}
+.saleHistory article {
+  display: grid;
+  grid-template-columns: 1fr 60px 90px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+.saleHistory article > div {
+  display: grid;
+}
+.saleHistory strong {
+  text-align: right;
+}
+.checkoutBox,
+.newProduct {
+  display: grid;
+  gap: 12px;
+}
+.checkoutBox h2 {
+  display: flex;
+  gap: 8px;
+}
+.checkoutBox label,
+.newProduct label {
+  display: grid;
+  gap: 5px;
+  font-size: 9px;
+}
+.checkoutBox select,
+.newProduct input {
+  height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0 8px;
+}
+.cartLines {
+  display: grid;
+  gap: 6px;
+}
+.cartLines span {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+}
+.cartTotal {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+.checkoutBox > button,
+.newProduct > button {
+  height: 39px;
+  border: 0;
+  border-radius: 5px;
+  background: #b57b33;
+  color: #fff;
+}
+.checkoutBox > button:disabled {
+  opacity: 0.5;
+}
+.newProduct > button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+.newProduct > .productInlineMessage {
+  display: block;
+  padding: 9px 10px;
+  border-radius: 5px;
+  background: #f5eee3;
+  color: #7c5a31;
+  font-size: 9px;
+}
+.newProduct {
+  margin-top: 17px;
+}
+.newProduct > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+@media (max-width: 900px) {
+  .salesLayout {
+    grid-template-columns: 1fr;
+  }
+  .salesMetrics {
+    grid-template-columns: 1fr;
+  }
+  .productCatalog article {
+    grid-template-columns: 1fr 80px 100px 34px;
+  }
+  .stockButton {
+    display: none;
+  }
+}

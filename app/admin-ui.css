@@ -1,0 +1,110 @@
+.editMini {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 4px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+.adminSplit {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 18px;
+}
+.adminForm {
+  padding: 24px;
+  max-width: 560px;
+}
+.adminForm h2 {
+  font: 600 21px "Playfair Display";
+  margin: 0 0 18px;
+}
+.adminForm > label,
+.adminForm .formRow label {
+  display: grid;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  margin-bottom: 13px;
+}
+.adminForm input {
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0 10px;
+}
+.adminForm input[type="color"] {
+  padding: 4px;
+  width: 100%;
+}
+.adminMessage {
+  padding: 10px;
+  background: #f3eadc;
+  color: #865d28;
+  border-radius: 5px;
+  font-size: 10px;
+  margin-bottom: 12px;
+}
+.teamCard {
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  align-items: center;
+  gap: 12px;
+}
+.teamCard > div {
+  display: grid;
+}
+.teamCard small {
+  color: var(--muted);
+  font-size: 9px;
+}
+.teamCard strong {
+  color: #a36e2e;
+}
+.dateFilter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dateFilter input {
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0 8px;
+  background: #fff;
+}
+.dateFilter span {
+  font-size: 10px;
+  color: var(--muted);
+}
+.reportTable {
+  overflow: hidden;
+}
+.reportTable .tableHeader,
+.reportTable .tableRow {
+  grid-template-columns: 1.3fr 0.8fr 1fr 0.7fr 1fr;
+}
+.reportTable strong {
+  text-align: right;
+  color: #55705a;
+}
+@media (max-width: 900px) {
+  .adminSplit {
+    grid-template-columns: 1fr;
+  }
+  .dateFilter {
+    margin-top: 15px;
+  }
+  .managementHead {
+    align-items: start;
+    flex-direction: column;
+  }
+  .reportTable .tableHeader,
+  .reportTable .tableRow {
+    grid-template-columns: 1fr 0.7fr 1fr;
+  }
+  .reportTable :nth-child(2),
+  .reportTable :nth-child(4) {
+    display: none;
+  }
+}

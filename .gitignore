@@ -1,0 +1,13 @@
+node_modules
+.npm-cache
+.next
+.next-dev
+*.tsbuildinfo
+.env*
+!.env.example
+backups
+.composer-cache
+laravel-app
+work
+.git
+.git-work

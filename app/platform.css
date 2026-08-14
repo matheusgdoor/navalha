@@ -1,0 +1,252 @@
+.platformPage {
+  min-height: 100vh;
+  background: var(--paper);
+  padding: 35px 5%;
+}
+.platformBadge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: #17211a;
+  color: #fff;
+  padding: 9px 13px;
+  border-radius: 20px;
+  font-size: 10px;
+}
+.platformBadge svg {
+  width: 15px;
+}
+.platformMetrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.platformMetrics article {
+  padding: 20px;
+  display: grid;
+  gap: 8px;
+}
+.platformMetrics small {
+  color: var(--muted);
+}
+.platformMetrics strong {
+  font: 600 27px "Playfair Display";
+}
+.platformRequests,
+.organizationsPanel {
+  margin-top: 18px;
+  padding: 22px;
+}
+.platformRequests h2,
+.organizationsHead h2 {
+  font: 600 20px "Playfair Display";
+  margin: 0 0 15px;
+}
+.platformRequests article {
+  display: grid;
+  grid-template-columns: 1fr 140px auto;
+  align-items: center;
+  gap: 18px;
+  border-top: 1px solid var(--line);
+  padding: 14px 0;
+}
+.platformRequests article > div:first-child,
+.orgTable article > div {
+  display: grid;
+}
+.platformRequests small,
+.orgTable small {
+  color: var(--muted);
+  font-size: 9px;
+}
+.requestActions {
+  display: flex;
+  gap: 7px;
+}
+.requestActions button,
+.orgTable button {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 5px;
+  padding: 8px 10px;
+  font-size: 9px;
+  cursor: pointer;
+}
+.requestActions button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.requestActions svg {
+  width: 13px;
+}
+.requestActions .approve {
+  background: #57745d;
+  color: #fff;
+  border-color: #57745d;
+}
+.organizationsHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.organizationsHead h2 {
+  display: flex;
+  gap: 8px;
+}
+.organizationsHead h2 svg {
+  width: 20px;
+}
+.organizationsHead label {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0 10px;
+}
+.organizationsHead label svg {
+  width: 15px;
+  color: var(--muted);
+}
+.organizationsHead input {
+  border: 0;
+  outline: 0;
+  height: 36px;
+  padding-left: 7px;
+}
+.orgHeader,
+.orgTable article {
+  display: grid;
+  grid-template-columns: 1.15fr 0.6fr 0.7fr 1.1fr 0.55fr 0.5fr;
+  gap: 12px;
+  align-items: center;
+}
+.orgDue {
+  display: grid;
+}
+.orgDue small {
+  color: var(--muted);
+}
+.orgDue small.overdue {
+  color: #a34f45;
+}
+.orgHeader {
+  padding: 11px 8px;
+  background: #f7f5f0;
+  text-transform: uppercase;
+  font-size: 8px;
+  color: var(--muted);
+}
+.orgTable article {
+  padding: 14px 8px;
+  border-top: 1px solid var(--line);
+  font-size: 10px;
+}
+.orgTable select {
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #fff;
+}
+.orgTable i {
+  font-style: normal;
+  border-radius: 14px;
+  padding: 5px 8px;
+  width: max-content;
+  background: #e8eee8;
+  color: #57745d;
+}
+.orgTable i.suspended,
+.orgTable i.canceled {
+  background: #f5e4e1;
+  color: #9b554c;
+}
+.platformForbidden {
+  min-height: 65vh;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+.readinessPanel {
+  padding: 22px;
+  margin: 18px 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+.readinessPanel p {
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: #a8773a;
+}
+.readinessPanel h2 {
+  font: 600 20px "Playfair Display";
+  margin: 4px 0;
+}
+.readinessPanel > span {
+  font-size: 9px;
+  padding: 7px 10px;
+  border-radius: 14px;
+  background: #f3e1df;
+  color: #99514a;
+}
+.readinessPanel > span.ready {
+  background: #e3ece4;
+  color: #55705a;
+}
+.readinessChecks {
+  grid-column: 1/-1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 15px;
+}
+.readinessChecks article {
+  display: grid;
+  grid-template-columns: 12px 1fr;
+  align-items: center;
+  padding: 9px;
+  background: #f8f7f3;
+}
+.readinessChecks i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #b85f51;
+}
+.readinessChecks i.ok {
+  background: #5d8162;
+}
+.readinessChecks small {
+  grid-column: 2;
+  color: var(--muted);
+  font-size: 8px;
+}
+.platformForbidden svg {
+  width: 55px;
+  height: 55px;
+  margin: auto;
+  color: #a8773a;
+}
+.platformForbidden h1 {
+  font: 600 28px "Playfair Display";
+}
+.platformForbidden p {
+  color: var(--muted);
+}
+@media (max-width: 850px) {
+  .platformMetrics {
+    grid-template-columns: 1fr 1fr;
+  }
+  .platformRequests article {
+    grid-template-columns: 1fr;
+  }
+  .orgTable {
+    overflow-x: auto;
+  }
+  .orgHeader,
+  .orgTable article {
+    min-width: 780px;
+  }
+}

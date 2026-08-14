@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS platform_admins(user_id uuid PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,created_at timestamptz NOT NULL DEFAULT now());
+INSERT INTO platform_admins(user_id) SELECT id FROM users WHERE lower(email)='admin@navalha.local' ON CONFLICT DO NOTHING;
+CREATE TABLE IF NOT EXISTS plan_change_requests(id uuid PRIMARY KEY DEFAULT gen_random_uuid(),organization_id uuid NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,requested_by uuid NOT NULL REFERENCES users(id),current_plan varchar(30) NOT NULL REFERENCES plans(code),requested_plan varchar(30) NOT NULL REFERENCES plans(code),status varchar(20) NOT NULL DEFAULT 'PENDING' CHECK(status IN('PENDING','APPROVED','REJECTED','CANCELED')),notes text,reviewed_by uuid REFERENCES users(id),reviewed_at timestamptz,created_at timestamptz NOT NULL DEFAULT now());
+CREATE UNIQUE INDEX IF NOT EXISTS one_pending_plan_request ON plan_change_requests(organization_id) WHERE status='PENDING';

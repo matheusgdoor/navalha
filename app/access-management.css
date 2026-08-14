@@ -1,0 +1,161 @@
+.accessPage {
+  min-height: 100vh;
+  background: var(--paper);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+.accessCard {
+  width: min(420px, 100%);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 32px;
+  display: grid;
+  gap: 14px;
+}
+.accessCard > svg {
+  color: #a8773a;
+}
+.accessCard > p {
+  letter-spacing: 2px;
+  font-size: 9px;
+  color: #a8773a;
+  margin: 0;
+}
+.accessCard h1 {
+  font: 600 28px "Playfair Display";
+  margin: 0;
+}
+.accessCard > small {
+  color: var(--muted);
+}
+.accessCard label,
+.inviteForm label {
+  display: grid;
+  gap: 6px;
+  font-size: 10px;
+}
+.accessCard input,
+.inviteForm input,
+.inviteForm select {
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0 10px;
+}
+.accessCard > button,
+.inviteForm > button {
+  height: 40px;
+  border: 0;
+  border-radius: 5px;
+  background: #b57b33;
+  color: #fff;
+  cursor: pointer;
+}
+.devAccessLink {
+  display: block;
+  text-align: center;
+  padding: 11px;
+  background: #e5eee5;
+  color: #507158;
+  border-radius: 5px;
+  text-decoration: none;
+}
+.forgotLink {
+  text-align: center;
+  color: #95662d;
+  font-size: 10px;
+}
+.usersPage {
+  min-height: 100vh;
+  background: var(--paper);
+  padding: 35px 5%;
+}
+.usersGrid {
+  display: grid;
+  grid-template-columns: 0.7fr 1.3fr;
+  gap: 17px;
+}
+.inviteForm,
+.usersList,
+.pendingInvites {
+  padding: 22px;
+}
+.inviteForm {
+  display: grid;
+  gap: 13px;
+  align-content: start;
+}
+.inviteForm h2,
+.usersList h2 {
+  font: 600 20px "Playfair Display";
+  display: flex;
+  gap: 8px;
+}
+.inviteLink {
+  display: flex;
+}
+.inviteLink input {
+  min-width: 0;
+  flex: 1;
+}
+.inviteLink button {
+  width: 40px;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+.inviteLink svg {
+  width: 15px;
+}
+.usersList article {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 13px 0;
+  border-top: 1px solid var(--line);
+}
+.usersList article > div {
+  display: grid;
+}
+.usersList small {
+  color: var(--muted);
+  font-size: 9px;
+}
+.usersList i {
+  font-style: normal;
+  font-size: 9px;
+  color: #99514a;
+}
+.usersList i.active {
+  color: #55705a;
+}
+.usersList article > button {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 5px;
+  padding: 7px 9px;
+  font-size: 9px;
+}
+.pendingInvites {
+  margin-top: 17px;
+}
+.pendingInvites article {
+  display: grid;
+  grid-template-columns: 1fr 100px 180px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  font-size: 10px;
+}
+.pendingInvites small {
+  color: var(--muted);
+}
+@media (max-width: 750px) {
+  .usersGrid {
+    grid-template-columns: 1fr;
+  }
+  .usersPage {
+    padding: 22px 14px;
+  }
+}

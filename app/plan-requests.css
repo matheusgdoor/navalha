@@ -1,0 +1,104 @@
+.planCard button.requestPlan {
+  background: #b57b33;
+  color: #fff;
+  border-color: #b57b33;
+  cursor: pointer;
+}
+.planCard button:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+.subscriptionMessage {
+  margin: 16px 0;
+  padding: 12px 15px;
+  border-radius: 5px;
+  background: #eee5d7;
+  color: #7b572b;
+  font-size: 11px;
+}
+.requestHistory {
+  padding: 22px;
+  margin-top: 18px;
+}
+.requestHistory h2 {
+  font: 600 19px "Playfair Display";
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.requestHistory h2 svg {
+  width: 18px;
+}
+.requestHistory article {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--line);
+  padding: 13px 0;
+}
+.requestHistory article > div {
+  display: grid;
+  gap: 3px;
+}
+.requestHistory small {
+  color: var(--muted);
+  font-size: 9px;
+}
+.requestHistory span {
+  padding: 5px 9px;
+  border-radius: 14px;
+  background: #f2e5d3;
+  color: #94672e;
+  font-size: 9px;
+}
+.requestHistory span.approved {
+  background: #e3ece4;
+  color: #55705a;
+}
+.requestHistory span.rejected {
+  background: #f3e1df;
+  color: #99514a;
+}
+.billingProvider {
+  margin: 16px 0;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.billingProvider > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.billingProvider > div > svg {
+  color: #a8773a;
+}
+.billingProvider span {
+  display: grid;
+}
+.billingProvider small {
+  color: var(--muted);
+}
+.billingProvider > i {
+  font-style: normal;
+  font-size: 9px;
+  padding: 6px 9px;
+  border-radius: 14px;
+  background: #f3e1df;
+  color: #99514a;
+}
+.billingProvider > i.connected {
+  background: #e3ece4;
+  color: #55705a;
+}
+.requestHistory span.paid {
+  background: #e3ece4;
+  color: #55705a;
+}
+.requestHistory span.failed,
+.requestHistory span.expired,
+.requestHistory span.canceled {
+  background: #f3e1df;
+  color: #99514a;
+}
