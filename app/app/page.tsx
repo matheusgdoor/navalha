@@ -958,17 +958,18 @@ function AdminPage({ active }: { active: string }) {
   );
   const [to, setTo] = useState(new Date().toISOString().slice(0, 10));
   const [reportBarber, setReportBarber] = useState("");
+  const [commissionClosures, setCommissionClosures] = useState<any[]>([]);
   const loadAdmin = useCallback(async () => {
     if (active === "Equipe")
       setData(await (await fetch("/api/barbers/manage")).json());
-    if (active === "Relatórios")
-      setData(
-        await (
-          await fetch(
-            `/api/reports?from=${from}T00:00:00.000Z&to=${to}T23:59:59.999Z${reportBarber ? `&barberId=${reportBarber}` : ""}`,
-          )
-        ).json(),
-      );
+    if (active === "Relatórios") {
+      const [report, closures] = await Promise.all([
+        fetch(`/api/reports?from=${from}T00:00:00.000Z&to=${to}T23:59:59.999Z${reportBarber ? `&barberId=${reportBarber}` : ""}`).then((response) => response.json()),
+        fetch("/api/commissions").then((response) => response.json()),
+      ]);
+      setData(report);
+      setCommissionClosures(Array.isArray(closures) ? closures : []);
+    }
   }, [active, from, to, reportBarber]);
   useEffect(() => {
     loadAdmin();
@@ -1052,6 +1053,14 @@ function AdminPage({ active }: { active: string }) {
     });
     const x = await r.json();
     setMessage(r.ok ? "Fechamento de comissão registrado." : x.error);
+    if (r.ok) loadAdmin();
+  }
+  async function settleCommission(id: string, status: "PENDING" | "PAID") {
+    if (!confirm(status === "PAID" ? "Confirmar que esta comissão foi paga?" : "Reabrir este pagamento como pendente?")) return;
+    const response = await fetch("/api/commissions", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id, status }) });
+    const result = await response.json();
+    setMessage(response.ok ? (status === "PAID" ? "Comissão marcada como paga." : "Comissão reaberta.") : result.error);
+    if (response.ok) loadAdmin();
   }
   if (active === "Configurações")
     return (
@@ -1310,6 +1319,15 @@ function AdminPage({ active }: { active: string }) {
             </strong>
           </div>
         ))}
+      </div>
+      <div className="panel commissionHistory">
+        <h2>Fechamentos de comissão</h2>
+        {commissionClosures.length ? commissionClosures.map((closure: any) => <article key={closure.id}>
+          <div><b>{closure.barber}</b><small>{new Date(`${closure.periodStart}T12:00:00`).toLocaleDateString("pt-BR")} a {new Date(`${closure.periodEnd}T12:00:00`).toLocaleDateString("pt-BR")} · {closure.commissionPercent}% sobre {money(closure.revenueCents)}</small></div>
+          <strong>{money(closure.commissionCents)}</strong>
+          <span className={closure.status === "PAID" ? "commissionPaid" : "commissionPending"}>{closure.status === "PAID" ? "Pago" : "Pendente"}</span>
+          <button onClick={() => settleCommission(closure.id, closure.status === "PAID" ? "PENDING" : "PAID")}>{closure.status === "PAID" ? "Reabrir" : "Marcar pago"}</button>
+        </article>) : <div className="emptyState">Nenhum fechamento registrado.</div>}
       </div>
     </section>
   );

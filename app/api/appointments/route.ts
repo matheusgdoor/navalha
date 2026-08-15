@@ -3,6 +3,7 @@ import { z } from "zod";
 import { transaction, query } from "@/lib/db";
 import { apiError, requireSession } from "@/lib/http";
 import { requireEntitlement } from "@/lib/entitlements";
+import { queueMessage } from "@/lib/messages";
 const schema = z.object({
   clientId: z.string().uuid(),
   barberId: z.string().uuid(),
@@ -73,8 +74,8 @@ export async function POST(req: Request) {
         );
       if (conflict.rowCount)
         throw new Error("Este barbeiro já possui atendimento nesse período");
-      return (
-        await client.query(
+      const appointment = (
+        await client.query<{ id: string }>(
           "INSERT INTO appointments(organization_id,client_id,barber_id,service_id,starts_at,ends_at,notes,created_by) VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *",
           [
             session.organizationId,
@@ -88,6 +89,9 @@ export async function POST(req: Request) {
           ],
         )
       ).rows[0];
+      await queueMessage(client, appointment.id, "CONFIRMATION");
+      await queueMessage(client, appointment.id, "REMINDER");
+      return appointment;
     });
     return NextResponse.json(result, { status: 201 });
   } catch (e) {

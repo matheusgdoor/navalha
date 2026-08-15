@@ -40,7 +40,10 @@ export async function PATCH(
           s.sub,
         ],
       );
-      if (x.status === "CANCELED") await queueMessage(c, id, "CANCELLATION");
+      if (x.status === "CANCELED") {
+        await c.query("UPDATE message_queue SET status='CANCELED' WHERE appointment_id=$1 AND event='REMINDER' AND status IN('PENDING','RETRY')", [id]);
+        await queueMessage(c, id, "CANCELLATION");
+      }
       if (x.status === "CONFIRMED") await queueMessage(c, id, "CONFIRMATION");
       return r.rows[0];
     });

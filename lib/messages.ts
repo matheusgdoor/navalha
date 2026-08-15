@@ -11,7 +11,10 @@ export async function queueMessage(
     x = r.rows[0];
   if (!x?.phone) return;
   await c.query(
-    "INSERT INTO message_queue(organization_id,appointment_id,event,recipient,payload,scheduled_at) VALUES($1,$2,$3,$4,$5,$6)",
+    `INSERT INTO message_queue(organization_id,appointment_id,event,recipient,payload,scheduled_at)
+     VALUES($1,$2,$3,$4,$5,$6)
+     ON CONFLICT(appointment_id,event) DO UPDATE SET recipient=excluded.recipient,payload=excluded.payload,
+       scheduled_at=excluded.scheduled_at,status='PENDING',attempts=0,last_error=NULL,sent_at=NULL`,
     [
       x.organization_id,
       appointmentId,

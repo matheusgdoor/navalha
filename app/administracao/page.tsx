@@ -7,6 +7,7 @@ import {
   Download,
   FileClock,
   MessageCircle,
+  ShieldCheck,
   Settings2,
 } from "lucide-react";
 import { maskDocument, maskPhone } from "@/lib/masks";
@@ -16,6 +17,8 @@ export default function AdminCenter() {
     [health, setHealth] = useState<any>(null),
     [wa, setWa] = useState<any>(null),
     [features, setFeatures] = useState<any>(null),
+    [privacy, setPrivacy] = useState<any>({ summary: {}, history: [] }),
+    [privacyFilter, setPrivacyFilter] = useState("ALL"),
     [message, setMessage] = useState("");
   const load = useCallback(
     () =>
@@ -25,14 +28,16 @@ export default function AdminCenter() {
         fetch("/api/health").then((r) => r.json()),
         fetch("/api/whatsapp/status").then((r) => r.json()),
         fetch("/api/features").then((r) => r.json()),
-      ]).then(([s, a, h, w, f]) => {
+        fetch(`/api/privacy/audit?type=${privacyFilter}`).then((r) => r.json()),
+      ]).then(([s, a, h, w, f, p]) => {
         setSettings(s);
         setAudit(Array.isArray(a) ? a : []);
         setHealth(h);
         setWa(w);
         setFeatures(f);
+        setPrivacy(p?.history ? p : { summary: {}, history: [] });
       }),
-    [],
+    [privacyFilter],
   );
   useEffect(() => {
     load();
@@ -168,6 +173,29 @@ export default function AdminCenter() {
               </button>
             </div>
           </section>
+        </div>
+      </section>
+      <section className="panel auditPanel">
+        <div className="privacyHead">
+          <h2><ShieldCheck />Auditoria LGPD</h2>
+          <select value={privacyFilter} onChange={(event) => setPrivacyFilter(event.target.value)}>
+            <option value="ALL">Todas as ações</option>
+            <option value="CONSENT">Consentimentos</option>
+            <option value="ORGANIZATION_EXPORT">Exportações</option>
+            <option value="CLIENT_ANONYMIZATION">Anonimizações</option>
+          </select>
+        </div>
+        <div className="privacyMetrics">
+          <span><small>Consentimentos ativos</small><b>{privacy.summary?.consents || 0}</b></span>
+          <span><small>Exportações</small><b>{privacy.summary?.exports || 0}</b></span>
+          <span><small>Anonimizações</small><b>{privacy.summary?.anonymizations || 0}</b></span>
+        </div>
+        <div className="privacyHistory">
+          {privacy.history?.length ? privacy.history.map((item: any) => <article key={`${item.category}-${item.id}`}>
+            <span className={`privacyType ${item.category.toLowerCase()}`}>{item.type === "TERMS_AND_PRIVACY" ? "ACEITE" : item.type === "ORGANIZATION_EXPORT" ? "EXPORTAÇÃO" : item.type === "CLIENT_ANONYMIZATION" ? "ANONIMIZAÇÃO" : item.type}</span>
+            <div><b>{item.subject}</b><small>{item.source} · {item.status}{item.revokedAt ? " · Revogado" : ""}</small></div>
+            <time>{new Date(item.createdAt).toLocaleString("pt-BR")}</time>
+          </article>) : <div className="emptyState">Nenhuma ação LGPD registrada.</div>}
         </div>
       </section>
       <section className="panel auditPanel">

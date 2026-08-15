@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { transaction } from "@/lib/db";
 import { apiError, requireSession } from "@/lib/http";
+import { queueMessage } from "@/lib/messages";
 const schema = z.object({
   startsAt: z.string().datetime(),
   barberId: z.string().uuid().optional(),
@@ -48,6 +49,8 @@ export async function PATCH(
         "INSERT INTO appointment_audit(organization_id,appointment_id,action,previous_data,new_data,user_id) VALUES($1,$2,$3,$4,$5,$6)",
         [s.organizationId, id, "RESCHEDULED", old.rows[0], updated, s.sub],
       );
+      await queueMessage(c, id, "CONFIRMATION");
+      await queueMessage(c, id, "REMINDER");
       return updated;
     });
     return NextResponse.json(row);

@@ -113,6 +113,16 @@
 .auditPanel {
   margin-top: 17px;
 }
+.privacyHead { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.privacyMetrics { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 14px 0; }
+.privacyMetrics span { display: grid; gap: 4px; padding: 14px; background: #f6f3ed; border-radius: 6px; }
+.privacyMetrics small { color: var(--muted); font-size: 9px; }
+.privacyMetrics b { font-family: var(--serif); font-size: 22px; }
+.privacyHistory article { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); }
+.privacyHistory article div { display: grid; flex: 1; }
+.privacyHistory article small,.privacyHistory time { color: var(--muted); font-size: 9px; }
+.privacyType { min-width: 84px; text-align: center; font-size: 8px; padding: 5px 7px; border-radius: 12px; background: #e3ece4; color: #55705a; }
+.privacyType.request { background: #f1e7d8; color: #8c622d; }
 .auditPanel article {
   display: flex;
   align-items: center;
@@ -149,4 +159,7 @@
   .auditPanel time {
     display: none;
   }
+  .privacyHead { align-items: flex-start; flex-direction: column; }
+  .privacyMetrics { grid-template-columns: 1fr; }
+  .privacyType { min-width: 72px; }
 }
