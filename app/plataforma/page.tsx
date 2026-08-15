@@ -8,6 +8,7 @@ import {
   Check,
   CircleDollarSign,
   ExternalLink,
+  History,
   ReceiptText,
   Search,
   ShieldCheck,
@@ -35,6 +36,7 @@ export default function Platform() {
     [billing, setBilling] = useState<any>(null),
     [readiness, setReadiness] = useState<any>(null),
     [monitoring, setMonitoring] = useState<any>(null),
+    [audit, setAudit] = useState<any[]>([]),
     [search, setSearch] = useState(""),
     [status, setStatus] = useState("ALL"),
     [selected, setSelected] = useState<any>(null),
@@ -43,7 +45,7 @@ export default function Platform() {
     [suspensionWorking, setSuspensionWorking] = useState(false),
     [forbidden, setForbidden] = useState(false);
   const load = useCallback(async () => {
-    const [o, r, p, ready, summary, billingResponse, monitoringResponse] = await Promise.all([
+    const [o, r, p, ready, summary, billingResponse, monitoringResponse, auditResponse] = await Promise.all([
       fetch("/api/platform/organizations"),
       fetch("/api/platform/requests"),
       fetch("/api/subscription"),
@@ -51,6 +53,7 @@ export default function Platform() {
       fetch("/api/platform/overview"),
       fetch("/api/platform/billing"),
       fetch("/api/platform/monitoring"),
+      fetch("/api/platform/audit?limit=30"),
     ]);
     if (o.status === 403) {
       setForbidden(true);
@@ -63,6 +66,7 @@ export default function Platform() {
     setOverview(await summary.json());
     setBilling(await billingResponse.json());
     setMonitoring(await monitoringResponse.json());
+    setAudit((await auditResponse.json()).events || []);
   }, []);
   useEffect(() => {
     load();
@@ -217,6 +221,16 @@ export default function Platform() {
         <div className="operationsHead"><span><Activity /><div><p>MONITORAMENTO OPERACIONAL</p><h2>Saúde da plataforma</h2></div></span><div className={monitoring?.summary?.healthy ? "operationHealthy" : "operationAttention"}><b>{monitoring?.summary?.healthy ? "Tudo operacional" : `${(monitoring?.summary?.critical || 0)+(monitoring?.summary?.warning || 0)} alerta(s)`}</b><small>{monitoring?.checkedAt ? `Atualizado ${new Date(monitoring.checkedAt).toLocaleTimeString("pt-BR")}` : "Verificando..."}</small></div></div>
         <div className="operationsSummary"><span className="critical"><b>{monitoring?.summary?.critical || 0}</b><small>Críticos</small></span><span className="warning"><b>{monitoring?.summary?.warning || 0}</b><small>Atenção</small></span><span className="info"><b>{monitoring?.summary?.info || 0}</b><small>Informativos</small></span></div>
         <div className="operationsAlerts">{monitoring?.alerts?.length ? monitoring.alerts.slice(0,10).map((alert:any)=><article key={alert.id} className={alert.severity.toLowerCase()}><TriangleAlert /><div><b>{alert.title}</b><small>{alert.organization ? `${alert.organization} · ` : ""}{alert.message}</small><em>{alert.action}</em></div></article>):<div className="operationEmpty"><Check /><span><b>Nenhuma ocorrência ativa</b><small>Fila, cobranças, acessos, limites e caixas estão regulares.</small></span></div>}</div>
+      </section>
+      <section className="panel platformAudit">
+        <div className="platformAuditHead"><span><History /><div><p>RASTREABILIDADE</p><h2>Atividade administrativa</h2></div></span><small>Últimas {audit.length} ações registradas</small></div>
+        <div className="platformAuditList">
+          {audit.length ? audit.slice(0, 12).map((event: any) => <article key={event.id}>
+            <i />
+            <div><b>{auditDescription(event)}</b><small>{event.organization || "Plataforma"} · por {event.actor}</small></div>
+            <time>{new Date(event.createdAt).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}</time>
+          </article>) : <div className="emptyState">Nenhuma ação administrativa registrada.</div>}
+        </div>
       </section>
       <section className="panel billingMonitor">
         <div className="billingMonitorHead">
@@ -631,6 +645,18 @@ export default function Platform() {
       )}
     </main>
   );
+}
+function auditDescription(event: any) {
+  if (event.action === "PLAN_REQUEST_APPROVED") return "Solicitação de plano aprovada";
+  if (event.action === "PLAN_REQUEST_REJECTED") return "Solicitação de plano recusada";
+  if (event.action !== "ORGANIZATION_UPDATED") return String(event.action || "Ação administrativa").replaceAll("_", " ");
+  const before = event.previousData || {}, after = event.newData || {};
+  if (before.manual_suspended !== after.manualSuspended)
+    return after.manualSuspended ? "Empresa suspensa manualmente" : "Acesso da empresa reativado";
+  if (before.plan !== after.plan) return `Plano alterado de ${before.plan || "—"} para ${after.plan || "—"}`;
+  if (String(before.period_end || "") !== String(after.periodEnd || "")) return "Vencimento da assinatura atualizado";
+  if (before.status !== after.status) return `Status alterado para ${statusLabel[after.status] || after.status}`;
+  return "Cadastro da empresa atualizado";
 }
 function Kpi({
   icon,
