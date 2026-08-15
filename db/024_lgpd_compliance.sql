@@ -13,6 +13,9 @@ CREATE TABLE IF NOT EXISTS privacy_consents (
 );
 CREATE INDEX IF NOT EXISTS privacy_consents_org_idx ON privacy_consents(organization_id,accepted_at DESC);
 CREATE INDEX IF NOT EXISTS privacy_consents_client_idx ON privacy_consents(client_id,accepted_at DESC);
+CREATE UNIQUE INDEX IF NOT EXISTS privacy_consents_active_user_version_idx
+  ON privacy_consents(organization_id,user_id,purpose,policy_version)
+  WHERE user_id IS NOT NULL AND revoked_at IS NULL;
 
 CREATE TABLE IF NOT EXISTS privacy_requests (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
