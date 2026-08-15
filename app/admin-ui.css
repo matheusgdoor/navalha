@@ -171,3 +171,4 @@
     padding: 14px;
   }
 }
+.cashShortcut{display:inline-flex;align-items:center;gap:8px;background:#b77b2b;color:#fff;text-decoration:none;padding:11px 15px;border-radius:5px;font-size:10px;font-weight:700}.cashShortcut svg{width:16px}

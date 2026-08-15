@@ -1,4 +1,4 @@
-const CACHE = "navalha-app-v2";
+const CACHE = "navalha-app-v3";
 const OFFLINE = "/offline";
 const SHELL = [OFFLINE, "/instalar", "/icons/navalha.svg", "/icons/navalha-maskable.svg"];
 

@@ -387,6 +387,12 @@ export default function Home() {
               </button>
             )}
           {currentUser?.role === "ADMIN" && (
+            <button onClick={() => (location.href = "/caixa")}>
+              <Banknote size={19} />
+              Abrir / fechar caixa
+            </button>
+          )}
+          {currentUser?.role === "ADMIN" && (
             <button onClick={() => (location.href = "/assinatura")}>
               <CreditCard size={19} />
               Assinatura
@@ -800,6 +806,7 @@ function Management({
             Adicionar
           </button>
         )}
+        {active === "Financeiro" && <a className="cashShortcut" href="/caixa"><Banknote />Abrir / fechar caixa</a>}
       </div>
       {active === "Agenda" && (
         <div className="panel dataTable">

@@ -149,6 +149,7 @@ export default function AdminCenter() {
               Exportar dados
             </h2>
             <a href="/assinatura">Plano e assinatura</a>
+            <a href="/caixa">Abrir / fechar caixa</a>
             <a href="/usuarios">Usuários e acessos</a>
             <a href="/vendas">Produtos, estoque e vendas</a>
             <a href="/api/export/clientes">Clientes.csv</a>
