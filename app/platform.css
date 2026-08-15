@@ -16,6 +16,7 @@
 .platformBadge svg {
   width: 15px;
 }
+.platformInstall{display:inline-flex;align-items:center;gap:6px;margin-left:auto;padding:8px 11px;border:1px solid var(--line);border-radius:18px;color:#825b2b;text-decoration:none;font-size:9px;background:#fff}.platformInstall svg{width:14px}
 .platformMetrics {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

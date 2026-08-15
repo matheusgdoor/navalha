@@ -22,6 +22,6 @@ export function middleware(req: NextRequest) {
 }
 export const config = {
   matcher: [
-    "/((?!$|login|login-plataforma|cadastro|agendar|cliente|esqueci-senha|redefinir-senha|aceitar-convite|privacidade|termos|instalar|offline|manifest.webmanifest|sw.js|icons|api/auth|api/customer|api/health|api/public|api/whatsapp|api/billing/webhook|api/billing/lifecycle|_next/static|_next/image|favicon.ico).*)",
+    "/((?!$|login|login-plataforma|cadastro|agendar|cliente|esqueci-senha|redefinir-senha|aceitar-convite|privacidade|termos|instalar|instalar-saas|offline|manifest.webmanifest|manifest-saas.webmanifest|sw.js|icons|api/auth|api/customer|api/health|api/public|api/whatsapp|api/billing/webhook|api/billing/lifecycle|_next/static|_next/image|favicon.ico).*)",
   ],
 };

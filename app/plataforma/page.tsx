@@ -11,6 +11,7 @@ import {
   ReceiptText,
   Search,
   ShieldCheck,
+  Smartphone,
   TriangleAlert,
   Users,
   X,
@@ -167,6 +168,7 @@ export default function Platform() {
           <ShieldCheck />
           Administrador SaaS
         </span>
+        <a className="platformInstall" href="/instalar-saas"><Smartphone />Instalar portal SaaS</a>
       </div>
       <div className="managementHead">
         <div>
