@@ -257,3 +257,4 @@
     grid-template-columns: repeat(3, 1fr);
   }
 }
+.customerPrivacy{display:flex;align-items:center;gap:7px;padding:10px;border-radius:5px;background:#edf0eb;color:#55705a;font-size:10px}.customerPrivacy svg{width:15px}

@@ -7,10 +7,7 @@ import { PRIVACY_POLICY_VERSION } from "@/lib/privacy";
 const schema = z.object({
   name: z.string().min(2),
   phone: z.string().refine(validPhone, "Telefone inválido"),
-  cpf: z
-    .string()
-    .refine((v) => !v || validCpf(v), "CPF inválido")
-    .optional(),
+  cpf: z.string().refine(validCpf, "CPF inválido"),
   email: z.string().email().optional().or(z.literal("")),
   barberId: z.string().uuid(),
   serviceId: z.string().uuid(),

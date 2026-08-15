@@ -303,11 +303,12 @@ function Booking() {
             </label>
           </div>
           <label>
-            CPF (opcional)
+            CPF
             <input
               name="cpf"
               inputMode="numeric"
               placeholder="000.000.000-00"
+              required
               onChange={(e) =>
                 (e.currentTarget.value = maskCpf(e.currentTarget.value))
               }
