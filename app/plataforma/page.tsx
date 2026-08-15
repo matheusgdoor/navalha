@@ -48,7 +48,7 @@ export default function Platform() {
     const [o, r, p, ready, summary, billingResponse, monitoringResponse, auditResponse] = await Promise.all([
       fetch("/api/platform/organizations"),
       fetch("/api/platform/requests"),
-      fetch("/api/subscription"),
+      fetch("/api/platform/plans"),
       fetch("/api/readiness"),
       fetch("/api/platform/overview"),
       fetch("/api/platform/billing"),
