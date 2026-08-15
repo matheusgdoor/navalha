@@ -25,12 +25,14 @@ import "./customer-portal.css";
 import "./customer-link.css";
 import "./legal.css";
 import "./install.css";
+import "./cash-register.css";
 import PwaRegister from "./pwa-register";
 
 export const metadata: Metadata = {
   title: "Navalha — Gestão para barbearia",
   description: "Agenda e gestão da sua barbearia",
   manifest: "/manifest.webmanifest",
+  icons: { icon: "/pwa-icon?size=192", apple: "/pwa-icon?size=180" },
   appleWebApp: { capable: true, statusBarStyle: "default", title: "Navalha" },
 };
 

@@ -103,9 +103,7 @@ function Login() {
             {loading ? "Entrando..." : "Entrar no sistema"}
           </button>
           {!platformArea && (
-            <a className="forgotLink" href="/esqueci-senha">
-              Esqueci minha senha
-            </a>
+            <><a className="forgotLink" href="/esqueci-senha">Esqueci minha senha</a><a className="platformLoginLink" href="/login?next=/plataforma&area=saas"><LockKeyhole />Acessar administração SaaS</a></>
           )}
           <footer>
             {platformArea ? (

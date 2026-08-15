@@ -14,8 +14,8 @@ export function GET() {
     lang: "pt-BR",
     categories: ["business", "productivity"],
     icons: [
-      { src: "/icons/navalha-saas.svg", sizes: "any", type: "image/svg+xml", purpose: "any" },
-      { src: "/icons/navalha-saas.svg", sizes: "any", type: "image/svg+xml", purpose: "maskable" },
+      { src: "/pwa-icon?variant=saas&size=192", sizes: "192x192", type: "image/png", purpose: "any" },
+      { src: "/pwa-icon?variant=saas&size=512", sizes: "512x512", type: "image/png", purpose: "any maskable" },
     ],
     shortcuts: [
       { name: "Empresas", url: "/plataforma?area=empresas" },

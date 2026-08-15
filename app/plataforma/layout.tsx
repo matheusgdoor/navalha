@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "Navalha SaaS — Administração",
   description: "Administração central da plataforma Navalha",
   manifest: "/manifest-saas.webmanifest",
-  icons: { icon: "/icons/navalha-saas.svg", apple: "/icons/navalha-saas.svg" },
+  icons: { icon: "/pwa-icon?variant=saas&size=192", apple: "/pwa-icon?variant=saas&size=180" },
   appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "Navalha SaaS" },
 };
 

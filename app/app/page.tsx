@@ -2,6 +2,7 @@
 import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import {
   Bell,
+  Banknote,
   CalendarDays,
   ChevronDown,
   CircleDollarSign,
@@ -81,6 +82,7 @@ const nav = [
   { label: "Clientes", icon: Users },
   { label: "Serviços", icon: Scissors },
   { label: "Financeiro", icon: WalletCards },
+  { label: "Caixa", icon: Banknote },
   { label: "Equipe", icon: Users },
   { label: "Disponibilidade", icon: Clock3 },
   { label: "Relatórios", icon: TrendingUp },
@@ -336,6 +338,10 @@ export default function Home() {
               onClick={() => {
                 if (label === "Disponibilidade") {
                   window.location.href = "/disponibilidade";
+                  return;
+                }
+                if (label === "Caixa") {
+                  window.location.href = "/caixa";
                   return;
                 }
                 setActive(label);
