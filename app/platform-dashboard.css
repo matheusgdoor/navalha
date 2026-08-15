@@ -7,6 +7,7 @@
   background: transparent;
   cursor: pointer;
 }
+.platformTopActions{display:flex;align-items:center;gap:8px;margin-left:auto}.platformTopActions .platformInstall{margin-left:0}
 .managementHead > time {
   font-size: 10px;
   color: var(--muted);
@@ -606,6 +607,7 @@
   .platformPage {
     padding: 22px 14px;
   }
+  .platformTop{align-items:flex-start;gap:10px;flex-wrap:wrap}.platformTopActions{width:100%;margin-left:0}.platformTopActions .platformInstall{flex:1;justify-content:center}
   .platformModal {
     align-items: end;
     padding: 0;

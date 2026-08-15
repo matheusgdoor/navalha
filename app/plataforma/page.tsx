@@ -7,6 +7,7 @@ import {
   CalendarClock,
   Check,
   CircleDollarSign,
+  Download,
   ExternalLink,
   History,
   ReceiptText,
@@ -175,7 +176,7 @@ export default function Platform() {
           <ShieldCheck />
           Administrador SaaS
         </span>
-        <a className="platformInstall" href="/instalar-saas"><Smartphone />Instalar portal SaaS</a>
+        <span className="platformTopActions"><a className="platformInstall" href="/api/platform/export"><Download />Exportar empresas</a><a className="platformInstall" href="/instalar-saas"><Smartphone />Instalar portal SaaS</a></span>
       </div>
       <div className="managementHead">
         <div>
