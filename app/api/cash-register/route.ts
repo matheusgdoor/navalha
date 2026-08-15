@@ -8,7 +8,7 @@ const schema = z.discriminatedUnion("action", [
   z.object({ action: z.literal("CLOSE"), countedCashCents: z.number().int().min(0), countedPixCents: z.number().int().min(0), countedCardCents: z.number().int().min(0), notes: z.string().max(500).optional() }),
 ]);
 
-const select = `SELECT cr.id,cr.business_date AS "businessDate",cr.status,cr.opening_cash_cents AS "openingCashCents",
+const select = `SELECT cr.id,cr.business_date::text AS "businessDate",cr.status,cr.opening_cash_cents AS "openingCashCents",
  cr.expected_cash_cents AS "expectedCashCents",cr.expected_pix_cents AS "expectedPixCents",cr.expected_card_cents AS "expectedCardCents",
  cr.counted_cash_cents AS "countedCashCents",cr.counted_pix_cents AS "countedPixCents",cr.counted_card_cents AS "countedCardCents",
  cr.difference_cents AS "differenceCents",cr.notes,cr.opened_at AS "openedAt",cr.closed_at AS "closedAt",uo.name AS "openedBy",uc.name AS "closedBy"
@@ -25,7 +25,7 @@ export async function GET() {
   try {
     const date = await businessDate(session.organizationId);
     const history = await query(`${select} WHERE cr.organization_id=$1 ORDER BY cr.business_date DESC LIMIT 60`, [session.organizationId]);
-    const current = history.rows.find((row: any) => String(row.businessDate).slice(0, 10) === date) || null;
+    const current = history.rows.find((row: any) => row.businessDate === date) || null;
     if (current?.status === "OPEN") {
       const expected = await totals(session.organizationId, current.openedAt, new Date());
       current.liveExpected = expected;
