@@ -108,3 +108,23 @@
     display: none;
   }
 }
+@media (max-width: 600px) {
+  .adminSplit {
+    gap: 14px;
+  }
+  .adminForm {
+    width: 100%;
+    max-width: none;
+    padding: 20px 15px;
+  }
+  .adminForm h2 {
+    margin-bottom: 15px;
+  }
+  .adminForm > label,
+  .adminForm .formRow label {
+    margin-bottom: 11px;
+  }
+  .teamCard {
+    padding: 14px;
+  }
+}

@@ -34,7 +34,25 @@
 }
 @media (max-width: 600px) {
   .teamCard {
-    grid-template-columns: 40px 1fr auto;
+    grid-template-columns: 40px minmax(0, 1fr) auto;
+    gap: 10px;
+  }
+  .teamCard .avatar {
+    display: grid;
+  }
+  .teamCard > div {
+    min-width: 0;
+  }
+  .teamCard > div b,
+  .teamCard > div small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .teamCard .editBarber {
+    width: auto;
+    min-width: 58px;
+    justify-self: end;
   }
   .teamCard > strong {
     display: none;
