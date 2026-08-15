@@ -290,7 +290,8 @@ export default function Landing() {
           <a href="/cadastro">Criar conta</a>
           <a href="/login-plataforma">Portal SaaS</a>
           <a href="/privacidade">Privacidade</a>
-          <a href="/termos">Termos</a>
+            <a href="/termos">Termos</a>
+            <a href="/instalar">Instalar aplicativo</a>
         </nav>
         <small>
           © {new Date().getFullYear()} Navalha. Todos os direitos reservados.

@@ -157,6 +157,7 @@ export default function AdminCenter() {
             <a href="/api/privacy/export">Backup LGPD completo.json</a>
             <a href="/privacidade">Política de Privacidade</a>
             <a href="/termos">Termos de Uso</a>
+            <a href="/instalar">Instalar aplicativo</a>
           </section>
           <section className="panel optionalModules">
             <h2>Recursos opcionais</h2>

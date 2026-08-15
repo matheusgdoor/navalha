@@ -24,6 +24,7 @@ import "./onboarding.css";
 import "./customer-portal.css";
 import "./customer-link.css";
 import "./legal.css";
+import "./install.css";
 import PwaRegister from "./pwa-register";
 
 export const metadata: Metadata = {
