@@ -9,5 +9,6 @@ backups
 .composer-cache
 laravel-app
 work
+tmp
 .git
 .git-work

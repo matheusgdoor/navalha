@@ -73,6 +73,37 @@
   padding: 0 8px;
   background: #fff;
 }
+.dateFilter select {
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0 9px;
+  background: #fff;
+  color: var(--ink);
+}
+.reportExport {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  border-radius: 5px;
+  background: #637c68;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.reportExportPdf { background: #b77b2b; }
+.paymentMethods {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.paymentMethods .panel { padding: 14px 16px; display: grid; gap: 4px; }
+.paymentMethods small, .paymentMethods span { color: var(--muted); font-size: 10px; }
+.paymentMethods strong { font-family: var(--serif); font-size: 19px; }
 .dateFilter span {
   font-size: 10px;
   color: var(--muted);
@@ -93,8 +124,10 @@
     grid-template-columns: 1fr;
   }
   .dateFilter {
-    margin-top: 15px;
-  }
+      margin-top: 15px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
   .managementHead {
     align-items: start;
     flex-direction: column;

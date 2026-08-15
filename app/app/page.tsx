@@ -957,6 +957,7 @@ function AdminPage({ active }: { active: string }) {
       .slice(0, 10),
   );
   const [to, setTo] = useState(new Date().toISOString().slice(0, 10));
+  const [reportBarber, setReportBarber] = useState("");
   const loadAdmin = useCallback(async () => {
     if (active === "Equipe")
       setData(await (await fetch("/api/barbers/manage")).json());
@@ -964,11 +965,11 @@ function AdminPage({ active }: { active: string }) {
       setData(
         await (
           await fetch(
-            `/api/reports?from=${from}T00:00:00.000Z&to=${to}T23:59:59.999Z`,
+            `/api/reports?from=${from}T00:00:00.000Z&to=${to}T23:59:59.999Z${reportBarber ? `&barberId=${reportBarber}` : ""}`,
           )
         ).json(),
       );
-  }, [active, from, to]);
+  }, [active, from, to, reportBarber]);
   useEffect(() => {
     loadAdmin();
   }, [loadAdmin]);
@@ -1219,7 +1220,7 @@ function AdminPage({ active }: { active: string }) {
         </div>
       </section>
     );
-  const summary = data?.summary || { revenue: 0, payments: 0, ticket: 0 };
+  const summary = data?.summary || { revenue: 0, payments: 0, ticket: 0, commission: 0, net: 0 };
   return (
     <section className="management">
       <div className="managementHead">
@@ -1229,6 +1230,10 @@ function AdminPage({ active }: { active: string }) {
           <small>Receitas e comissões baseadas nos pagamentos.</small>
         </div>
         <div className="dateFilter">
+          <select value={reportBarber} onChange={(e) => setReportBarber(e.target.value)} aria-label="Filtrar por barbeiro">
+            <option value="">Todos os barbeiros</option>
+            {data?.availableBarbers?.map((barber: any) => <option key={barber.id} value={barber.id}>{barber.name}</option>)}
+          </select>
           <input
             type="date"
             value={from}
@@ -1240,7 +1245,14 @@ function AdminPage({ active }: { active: string }) {
             value={to}
             onChange={(e) => setTo(e.target.value)}
           />
+          <a className="reportExport" href={`/api/reports/export?format=csv&from=${from}&to=${to}${reportBarber ? `&barberId=${reportBarber}` : ""}`}>Exportar CSV</a>
+          <a className="reportExport reportExportPdf" href={`/api/reports/export?format=pdf&from=${from}&to=${to}${reportBarber ? `&barberId=${reportBarber}` : ""}`}>Exportar PDF</a>
         </div>
+      </div>
+      <div className="paymentMethods">
+        {data?.methods?.map((method: any) => (
+          <div className="panel" key={method.method}><small>{method.method}</small><strong>{money(method.revenue)}</strong><span>{method.payments} pagamentos</span></div>
+        ))}
       </div>
       <div className="financeMetrics">
         <Metric
@@ -1256,6 +1268,20 @@ function AdminPage({ active }: { active: string }) {
           value={money(summary.ticket)}
           note="No período selecionado"
           tone="gold"
+        />
+        <Metric
+          icon={<Users />}
+          title="Comissões"
+          value={money(summary.commission)}
+          note="Total calculado no período"
+          tone="blue"
+        />
+        <Metric
+          icon={<WalletCards />}
+          title="Líquido estimado"
+          value={money(summary.net)}
+          note="Receita menos comissões"
+          tone="green"
         />
       </div>
       {message && <div className="adminMessage">{message}</div>}
