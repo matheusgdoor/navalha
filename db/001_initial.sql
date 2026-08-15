@@ -38,10 +38,3 @@ CREATE TABLE IF NOT EXISTS payments (
   amount_cents integer NOT NULL CHECK(amount_cents >= 0), method payment_method NOT NULL,
   paid_at timestamptz NOT NULL DEFAULT now(), created_by uuid REFERENCES users(id)
 );
-
-INSERT INTO barbers(name, phone, commission_percent, color)
-SELECT * FROM (VALUES ('Lucas', '(65) 99999-1001', 35.00, '#d39a4a'), ('André', '(65) 99999-1002', 35.00, '#637c68')) v
-WHERE NOT EXISTS (SELECT 1 FROM barbers);
-INSERT INTO services(name, price_cents, duration_minutes)
-SELECT * FROM (VALUES ('Corte degradê',4500,45),('Corte + barba',7500,60),('Barba completa',4000,30),('Corte clássico',4000,40),('Corte + sobrancelha',5500,50),('Corte infantil',3500,35)) seed(name,price,duration)
-WHERE NOT EXISTS (SELECT 1 FROM services);
