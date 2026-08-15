@@ -1,0 +1,1 @@
+export default function Offline(){return <main className="publicError"><span>✂</span><h1>Você está offline</h1><p>Reconecte-se à internet para atualizar agenda e dados da barbearia.</p><a href="/app">Tentar novamente</a></main>}

@@ -550,3 +550,4 @@
     text-align: left;
   }
 }
+.legalConsent{display:flex!important;grid-template-columns:none!important;align-items:flex-start;gap:9px!important;font-size:10px!important;font-weight:400!important;line-height:1.45}.legalConsent input{width:16px!important;height:16px!important;flex:0 0 16px;margin:2px 0 0}.legalConsent a{color:#95662d}.publicLegalConsent{margin:8px 0 16px!important}

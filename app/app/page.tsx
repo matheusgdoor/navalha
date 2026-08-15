@@ -507,6 +507,8 @@ export default function Home() {
               onboarding={currentUser?.role === "ADMIN" ? onboarding : null}
               onOnboarding={(action) => {
                 if (action === "settings") location.href = "/administracao";
+                else if (action === "privacy") location.href = "/privacidade";
+                else if (action === "public") location.href = `/agendar?organization=${currentUser?.organizationSlug || "navalha"}`;
                 else if (action === "availability")
                   location.href = "/disponibilidade";
                 else if (action === "appointment") setModal("appointment");

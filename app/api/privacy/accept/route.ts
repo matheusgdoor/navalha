@@ -1,0 +1,6 @@
+import { NextResponse } from "next/server";
+import { query } from "@/lib/db";
+import { requireAdmin } from "@/lib/http";
+import { PRIVACY_POLICY_VERSION } from "@/lib/privacy";
+export async function GET(){const s=await requireAdmin();if(!s)return NextResponse.json({authenticated:false});const result=await query("SELECT 1 FROM privacy_consents WHERE organization_id=$1 AND user_id=$2 AND purpose='TERMS_AND_PRIVACY' AND policy_version=$3 AND revoked_at IS NULL LIMIT 1",[s.organizationId,s.sub,PRIVACY_POLICY_VERSION]);const accepted=(result.rowCount??0)>0;return NextResponse.json({authenticated:true,accepted})}
+export async function POST(){const s=await requireAdmin();if(!s)return NextResponse.json({error:"Acesso restrito"},{status:403});await query(`INSERT INTO privacy_consents(organization_id,user_id,subject_email,purpose,legal_basis,policy_version,source) SELECT $1,$2,lower($3),'TERMS_AND_PRIVACY','CONSENT',$4,'ADMIN_CONFIRMATION' WHERE NOT EXISTS(SELECT 1 FROM privacy_consents WHERE organization_id=$1 AND user_id=$2 AND purpose='TERMS_AND_PRIVACY' AND policy_version=$4 AND revoked_at IS NULL)`,[s.organizationId,s.sub,s.email,PRIVACY_POLICY_VERSION]);return NextResponse.json({accepted:true})}

@@ -95,6 +95,10 @@ export default function Signup() {
           Senha
           <input name="password" type="password" minLength={8} required />
         </label>
+        <label className="legalConsent">
+          <input name="privacyAccepted" type="checkbox" value="true" required />
+          <span>Li e aceito os <a href="/termos" target="_blank">Termos de Uso</a> e a <a href="/privacidade" target="_blank">Política de Privacidade</a>.</span>
+        </label>
         {error && <div className="loginError">{error}</div>}
         <button disabled={loading}>
           {loading ? "Criando..." : "Criar barbearia"}

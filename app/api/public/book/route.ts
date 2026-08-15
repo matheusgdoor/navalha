@@ -3,6 +3,7 @@ import { z } from "zod";
 import { transaction } from "@/lib/db";
 import { queueMessage } from "@/lib/messages";
 import { validCpf, validPhone } from "@/lib/br-fields";
+import { PRIVACY_POLICY_VERSION } from "@/lib/privacy";
 const schema = z.object({
   name: z.string().min(2),
   phone: z.string().refine(validPhone, "Telefone inválido"),
@@ -15,6 +16,7 @@ const schema = z.object({
   serviceId: z.string().uuid(),
   startsAt: z.string().datetime(),
   organization: z.string().default("navalha"),
+  privacyAccepted: z.literal(true),
 });
 export async function POST(req: Request) {
   try {
@@ -68,6 +70,11 @@ export async function POST(req: Request) {
             "UPDATE clients SET name=$1,cpf=COALESCE($2,cpf),email=COALESCE($3,email),updated_at=now() WHERE id=$4 AND organization_id=$5",
             [x.name, x.cpf || null, x.email || null, client.rows[0].id, org.id],
           );
+        await c.query(
+          `INSERT INTO privacy_consents(organization_id,client_id,subject_email,purpose,legal_basis,policy_version,source)
+           VALUES($1,$2,$3,'APPOINTMENT_AND_SERVICE','CONSENT',$4,'PUBLIC_BOOKING')`,
+          [org.id,client.rows[0].id,x.email || null,PRIVACY_POLICY_VERSION],
+        );
         const a = await c.query<{ id: string }>(
           "INSERT INTO appointments(organization_id,client_id,barber_id,service_id,starts_at,ends_at,status,public_request_key) VALUES($1,$2,$3,$4,$5,$6,'PENDING',$7) RETURNING id",
           [

@@ -21,13 +21,15 @@ export default function ClientHistory({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<any>(null),
+    [clientId, setClientId] = useState("");
   useEffect(() => {
-    params.then(({ id }) =>
-      fetch(`/api/clients/${id}/history`)
+    params.then(({ id }) => {
+      setClientId(id);
+      return fetch(`/api/clients/${id}/history`)
         .then((r) => r.json())
-        .then(setData),
-    );
+        .then(setData);
+    });
   }, [params]);
   if (!data)
     return (
@@ -38,6 +40,13 @@ export default function ClientHistory({
   const total = data.appointments
     .filter((a: any) => a.paidAt)
     .reduce((s: number, a: any) => s + a.priceCents, 0);
+  async function anonymize() {
+    if (!confirm("Anonimizar os dados pessoais deste cliente? O histórico financeiro será preservado.")) return;
+    const r = await fetch(`/api/privacy/clients/${clientId}/anonymize`, { method: "POST" }),
+      x = await r.json();
+    if (!r.ok) { alert(x.error); return; }
+    location.reload();
+  }
   return (
     <main className="clientHistory">
       <a href="/" className="backLink">
@@ -57,6 +66,7 @@ export default function ClientHistory({
           <CalendarDays />
           Atendimentos<strong>{data.appointments.length}</strong>
         </span>
+        <button className="privacyAnonymize" onClick={anonymize}>Anonimizar dados</button>
         <span>
           <CircleDollarSign />
           Total gasto<strong>{money(total)}</strong>

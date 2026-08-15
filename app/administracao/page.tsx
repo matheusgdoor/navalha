@@ -149,6 +149,9 @@ export default function AdminCenter() {
             <a href="/api/export/clientes">Clientes.csv</a>
             <a href="/api/export/agenda">Agenda.csv</a>
             <a href="/api/export/financeiro">Financeiro.csv</a>
+            <a href="/api/privacy/export">Backup LGPD completo.json</a>
+            <a href="/privacidade">Política de Privacidade</a>
+            <a href="/termos">Termos de Uso</a>
           </section>
           <section className="panel optionalModules">
             <h2>Recursos opcionais</h2>

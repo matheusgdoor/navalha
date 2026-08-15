@@ -4,6 +4,7 @@ import { z } from "zod";
 import { transaction } from "@/lib/db";
 import { createSession, SESSION_COOKIE } from "@/lib/auth";
 import { validDocument, validPhone } from "@/lib/br-fields";
+import { PRIVACY_POLICY_VERSION } from "@/lib/privacy";
 const schema = z.object({
   businessName: z.string().min(2).max(120),
   slug: z
@@ -14,6 +15,7 @@ const schema = z.object({
   ownerName: z.string().min(2).max(120),
   email: z.string().email(),
   password: z.string().min(8),
+  privacyAccepted: z.union([z.literal(true), z.literal("true")]),
   phone: z
     .string()
     .refine((v) => !v || validPhone(v), "Telefone inválido")
@@ -61,6 +63,11 @@ export async function POST(req: Request) {
         await c.query(
           `INSERT INTO services(organization_id,name,price_cents,duration_minutes) VALUES($1,'Corte',4000,40),($1,'Barba',3500,30),($1,'Corte + barba',7000,60)`,
           [org.rows[0].id],
+        );
+        await c.query(
+          `INSERT INTO privacy_consents(organization_id,user_id,subject_email,purpose,legal_basis,policy_version,source)
+           VALUES($1,$2,lower($3),'TERMS_AND_PRIVACY','CONSENT',$4,'BUSINESS_SIGNUP')`,
+          [org.rows[0].id,user.rows[0].id,x.email,PRIVACY_POLICY_VERSION],
         );
         return {
           userId: user.rows[0].id,

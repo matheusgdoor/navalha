@@ -13,11 +13,13 @@ export async function GET() {
  (SELECT count(*)::int FROM business_hours WHERE organization_id=$1 AND active=true) hours,
  (SELECT count(*)::int FROM appointments WHERE organization_id=$1) appointments,
  (SELECT count(*)::int FROM clients WHERE organization_id=$1) clients,
+ (SELECT count(*)::int FROM privacy_consents WHERE organization_id=$1 AND purpose='TERMS_AND_PRIVACY' AND revoked_at IS NULL) privacy,
  (SELECT CASE WHEN phone IS NOT NULL AND address IS NOT NULL THEN 1 ELSE 0 END FROM business_settings WHERE organization_id=$1)::int profile`,
       [s.organizationId],
     )
   ).rows[0];
   const tasks = [
+    { key:"privacy", label:"Confirme a proteção de dados", description:"Termos e privacidade registrados.", done:row.privacy>0, action:"privacy" },
     {
       key: "profile",
       label: "Complete os dados da barbearia",
@@ -53,6 +55,7 @@ export async function GET() {
       done: row.appointments > 0,
       action: "appointment",
     },
+    { key:"public", label:"Compartilhe sua agenda", description:"Abra a página pública para seus clientes.", done:row.services>0&&row.barbers>0&&row.hours>0, action:"public" },
   ];
   const completed = tasks.filter((x) => x.done).length;
   return NextResponse.json({

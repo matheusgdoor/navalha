@@ -104,6 +104,7 @@ function Booking() {
           barberId: barber,
           startsAt: slot,
           organization,
+          privacyAccepted: f.privacyAccepted === "true",
         }),
       }),
       x = await r.json();
@@ -311,6 +312,10 @@ function Booking() {
                 (e.currentTarget.value = maskCpf(e.currentTarget.value))
               }
             />
+          </label>
+          <label className="legalConsent publicLegalConsent">
+            <input name="privacyAccepted" type="checkbox" value="true" required />
+            <span>Autorizo o uso dos dados para realizar o agendamento e confirmo que li a <a href="/privacidade" target="_blank">Política de Privacidade</a>.</span>
           </label>
           {error && <div className="loginError">{error}</div>}
           <button

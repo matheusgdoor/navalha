@@ -289,6 +289,8 @@ export default function Landing() {
           <a href="/login">Entrar na empresa</a>
           <a href="/cadastro">Criar conta</a>
           <a href="/login-plataforma">Portal SaaS</a>
+          <a href="/privacidade">Privacidade</a>
+          <a href="/termos">Termos</a>
         </nav>
         <small>
           © {new Date().getFullYear()} Navalha. Todos os direitos reservados.

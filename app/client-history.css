@@ -68,3 +68,4 @@
     display: none;
   }
 }
+.privacyAnonymize{border:1px solid #d8b5b0;background:#fff;color:#99514a;border-radius:5px;padding:9px 12px;cursor:pointer}@media(max-width:700px){.privacyAnonymize{grid-column:1/-1;width:100%}}

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./database-ui.css";
 import "./admin-ui.css";
@@ -23,10 +23,18 @@ import "./landing.css";
 import "./onboarding.css";
 import "./customer-portal.css";
 import "./customer-link.css";
+import "./legal.css";
+import PwaRegister from "./pwa-register";
 
 export const metadata: Metadata = {
   title: "Navalha — Gestão para barbearia",
   description: "Agenda e gestão da sua barbearia",
+  manifest: "/manifest.webmanifest",
+  appleWebApp: { capable: true, statusBarStyle: "default", title: "Navalha" },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#20241f",
 };
 
 export default function RootLayout({
@@ -34,7 +42,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR">
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning><PwaRegister />{children}</body>
     </html>
   );
 }
