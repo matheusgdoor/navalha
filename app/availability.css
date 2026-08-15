@@ -90,3 +90,26 @@
     grid-template-columns: 1fr;
   }
 }
+@media (max-width: 520px) {
+  .availabilityList,
+  .messageQueue {
+    padding: 18px 14px;
+  }
+  .availabilityList article,
+  .messageQueue article {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .availabilityList article > div,
+  .messageQueue article > div {
+    min-width: 0;
+  }
+  .availabilityList article > span,
+  .messageQueue article > time {
+    flex: 1 0 calc(100% - 46px);
+    text-align: left;
+  }
+  .queueStatus {
+    flex: 0 0 auto;
+  }
+}

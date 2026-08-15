@@ -606,6 +606,24 @@
   .platformPage {
     padding: 22px 14px;
   }
+  .platformModal {
+    align-items: end;
+    padding: 0;
+  }
+  .platformModal > section {
+    width: 100%;
+    max-height: 92dvh;
+    padding: 22px 16px;
+    border-radius: 14px 14px 0 0;
+  }
+  .companyStats {
+    grid-template-columns: 1fr;
+  }
+  .orgFilters,
+  .orgFilters label,
+  .orgFilters select {
+    width: 100%;
+  }
   .managementHead > time {
     display: none;
   }
