@@ -34,6 +34,7 @@ export default function Platform() {
     [overview, setOverview] = useState<any>(null),
     [billing, setBilling] = useState<any>(null),
     [readiness, setReadiness] = useState<any>(null),
+    [monitoring, setMonitoring] = useState<any>(null),
     [search, setSearch] = useState(""),
     [status, setStatus] = useState("ALL"),
     [selected, setSelected] = useState<any>(null),
@@ -42,13 +43,14 @@ export default function Platform() {
     [suspensionWorking, setSuspensionWorking] = useState(false),
     [forbidden, setForbidden] = useState(false);
   const load = useCallback(async () => {
-    const [o, r, p, ready, summary, billingResponse] = await Promise.all([
+    const [o, r, p, ready, summary, billingResponse, monitoringResponse] = await Promise.all([
       fetch("/api/platform/organizations"),
       fetch("/api/platform/requests"),
       fetch("/api/subscription"),
       fetch("/api/readiness"),
       fetch("/api/platform/overview"),
       fetch("/api/platform/billing"),
+      fetch("/api/platform/monitoring"),
     ]);
     if (o.status === 403) {
       setForbidden(true);
@@ -60,6 +62,7 @@ export default function Platform() {
     setReadiness(await ready.json());
     setOverview(await summary.json());
     setBilling(await billingResponse.json());
+    setMonitoring(await monitoringResponse.json());
   }, []);
   useEffect(() => {
     load();
@@ -209,6 +212,11 @@ export default function Platform() {
           note={`${s.dueSoon || 0} vencem em até 7 dias`}
           tone="red"
         />
+      </section>
+      <section className="panel operationsMonitor">
+        <div className="operationsHead"><span><Activity /><div><p>MONITORAMENTO OPERACIONAL</p><h2>Saúde da plataforma</h2></div></span><div className={monitoring?.summary?.healthy ? "operationHealthy" : "operationAttention"}><b>{monitoring?.summary?.healthy ? "Tudo operacional" : `${(monitoring?.summary?.critical || 0)+(monitoring?.summary?.warning || 0)} alerta(s)`}</b><small>{monitoring?.checkedAt ? `Atualizado ${new Date(monitoring.checkedAt).toLocaleTimeString("pt-BR")}` : "Verificando..."}</small></div></div>
+        <div className="operationsSummary"><span className="critical"><b>{monitoring?.summary?.critical || 0}</b><small>Críticos</small></span><span className="warning"><b>{monitoring?.summary?.warning || 0}</b><small>Atenção</small></span><span className="info"><b>{monitoring?.summary?.info || 0}</b><small>Informativos</small></span></div>
+        <div className="operationsAlerts">{monitoring?.alerts?.length ? monitoring.alerts.slice(0,10).map((alert:any)=><article key={alert.id} className={alert.severity.toLowerCase()}><TriangleAlert /><div><b>{alert.title}</b><small>{alert.organization ? `${alert.organization} · ` : ""}{alert.message}</small><em>{alert.action}</em></div></article>):<div className="operationEmpty"><Check /><span><b>Nenhuma ocorrência ativa</b><small>Fila, cobranças, acessos, limites e caixas estão regulares.</small></span></div>}</div>
       </section>
       <section className="panel billingMonitor">
         <div className="billingMonitorHead">
