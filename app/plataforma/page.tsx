@@ -41,6 +41,10 @@ export default function Platform() {
     [search, setSearch] = useState(""),
     [status, setStatus] = useState("ALL"),
     [selected, setSelected] = useState<any>(null),
+    [companyNotes, setCompanyNotes] = useState<any[]>([]),
+    [newNote, setNewNote] = useState(""),
+    [noteCategory, setNoteCategory] = useState("SUPPORT"),
+    [noteWorking, setNoteWorking] = useState(false),
     [message, setMessage] = useState(""),
     [suspensionError, setSuspensionError] = useState(""),
     [suspensionWorking, setSuspensionWorking] = useState(false),
@@ -126,6 +130,26 @@ export default function Platform() {
   async function platformLogout() {
     await fetch("/api/auth/logout-platform", { method: "POST" });
     location.href = "/login-plataforma";
+  }
+  async function openCompany(company: any) {
+    setSuspensionError("");
+    setSelected(company);
+    setCompanyNotes([]);
+    const response = await fetch(`/api/platform/organizations/${company.id}/notes`);
+    const data = await response.json().catch(() => ({}));
+    if (response.ok) setCompanyNotes(data.notes || []);
+  }
+  async function addCompanyNote() {
+    if (newNote.trim().length < 3) return setMessage("Escreva uma anotação válida.");
+    setNoteWorking(true);
+    const response = await fetch(`/api/platform/organizations/${selected.id}/notes`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ note: newNote, category: noteCategory }) });
+    const data = await response.json().catch(() => ({}));
+    setNoteWorking(false);
+    if (!response.ok) return setMessage(data.error || "Não foi possível salvar a anotação.");
+    setCompanyNotes((current) => [data, ...current]);
+    setNewNote("");
+    setMessage("Anotação interna registrada.");
+    load();
   }
   async function changeSuspension() {
     const suspending = !selected.manualSuspended;
@@ -485,10 +509,7 @@ export default function Platform() {
           {visible.map((o) => (
             <article
               key={o.id}
-              onClick={() => {
-                setSuspensionError("");
-                setSelected(o);
-              }}
+              onClick={() => openCompany(o)}
             >
               <div>
                 <b>{o.name}</b>
@@ -641,6 +662,11 @@ export default function Platform() {
                   ? "Reativar acesso da empresa"
                   : "Suspender empresa"}
             </button>
+            <div className="companyNotes">
+              <div><p>ACOMPANHAMENTO INTERNO</p><h3>Notas da plataforma</h3></div>
+              <div className="companyNoteForm"><select value={noteCategory} onChange={(e) => setNoteCategory(e.target.value)}><option value="SUPPORT">Suporte</option><option value="COMMERCIAL">Comercial</option><option value="FINANCIAL">Financeiro</option><option value="SECURITY">Segurança</option></select><textarea value={newNote} maxLength={2000} onChange={(e) => setNewNote(e.target.value)} placeholder="Registre contatos, acordos ou ocorrências..."/><button onClick={addCompanyNote} disabled={noteWorking}>{noteWorking ? "Salvando..." : "Adicionar anotação"}</button></div>
+              <div className="companyNoteList">{companyNotes.length ? companyNotes.map((note) => <article key={note.id}><span><b>{({SUPPORT:"Suporte",COMMERCIAL:"Comercial",FINANCIAL:"Financeiro",SECURITY:"Segurança"} as any)[note.category] || note.category}</b><small>{note.author} · {new Date(note.createdAt).toLocaleString("pt-BR")}</small></span><p>{note.note}</p></article>) : <small>Nenhuma anotação interna registrada.</small>}</div>
+            </div>
           </section>
         </div>
       )}
@@ -648,6 +674,7 @@ export default function Platform() {
   );
 }
 function auditDescription(event: any) {
+  if (event.action === "SUPPORT_NOTE_CREATED") return "Anotação interna adicionada";
   if (event.action === "PLAN_REQUEST_APPROVED") return "Solicitação de plano aprovada";
   if (event.action === "PLAN_REQUEST_REJECTED") return "Solicitação de plano recusada";
   if (event.action !== "ORGANIZATION_UPDATED") return String(event.action || "Ação administrativa").replaceAll("_", " ");
