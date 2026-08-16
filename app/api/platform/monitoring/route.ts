@@ -8,7 +8,7 @@ type Alert = { id: string; severity: "CRITICAL" | "WARNING" | "INFO"; title: str
 export async function GET() {
   if (!(await requirePlatformAdmin())) return NextResponse.json({ error: "Acesso restrito à plataforma" }, { status: 403 });
   try {
-    const [queue, billing, cash, access, limits, requests] = await Promise.all([
+    const [queue, billing, cash, access, authAccess, limits, requests] = await Promise.all([
       query<any>(`SELECT o.name organization,count(*)::int total,count(*) FILTER(WHERE mq.status='FAILED')::int failed,
         count(*) FILTER(WHERE mq.status IN('PENDING','RETRY') AND mq.scheduled_at<now()-interval '15 minutes')::int delayed
         FROM message_queue mq JOIN organizations o ON o.id=mq.organization_id
@@ -18,6 +18,7 @@ export async function GET() {
       query<any>(`SELECT o.name organization,cr.business_date::text AS date,(current_date-cr.business_date)::int days
         FROM cash_registers cr JOIN organizations o ON o.id=cr.organization_id WHERE cr.status='OPEN' AND cr.business_date<current_date ORDER BY cr.business_date LIMIT 20`),
       query<any>(`SELECT count(*)::int failures,count(DISTINCT identifier_hash)::int identifiers FROM customer_login_attempts WHERE success=false AND attempted_at>now()-interval '15 minutes'`),
+      query<any>(`SELECT count(*)::int failures,count(DISTINCT identifier_hash)::int identifiers FROM auth_login_attempts WHERE success=false AND attempted_at>now()-interval '15 minutes'`),
       query<any>(`SELECT o.name organization,p.monthly_appointment_limit AS "limit",count(a.id)::int used,
         round(count(a.id)*100.0/GREATEST(p.monthly_appointment_limit,1))::int percentage
         FROM organizations o JOIN subscriptions s ON s.organization_id=o.id JOIN plans p ON p.code=s.plan_code
@@ -31,6 +32,7 @@ export async function GET() {
     cash.rows.forEach((row: any) => alerts.push({ id: `cash-${row.organization}`, severity: row.days > 2 ? "CRITICAL" : "WARNING", title: "Caixa permanece aberto", message: `Caixa de ${new Date(`${String(row.date).slice(0,10)}T12:00:00`).toLocaleDateString("pt-BR")} ainda não foi fechado.`, organization: row.organization, action: "Solicitar fechamento à empresa" }));
     limits.rows.forEach((row: any) => alerts.push({ id: `limit-${row.organization}`, severity: row.percentage >= 100 ? "CRITICAL" : "WARNING", title: row.percentage >= 100 ? "Limite do plano atingido" : "Empresa próxima do limite", message: `${row.used} de ${row.limit} agendamentos utilizados (${row.percentage}%).`, organization: row.organization, action: "Avaliar upgrade de plano" }));
     if (access.rows[0]?.failures >= 8) alerts.push({ id: "access", severity: access.rows[0].failures >= 30 ? "CRITICAL" : "WARNING", title: "Tentativas suspeitas de acesso", message: `${access.rows[0].failures} falhas para ${access.rows[0].identifiers} identificador(es) nos últimos 15 minutos.`, action: "Monitorar origem e possíveis abusos" });
+    if (authAccess.rows[0]?.failures >= 5) alerts.push({ id: "auth-access", severity: authAccess.rows[0].failures >= 20 ? "CRITICAL" : "WARNING", title: "Falhas nos painéis administrativos", message: `${authAccess.rows[0].failures} tentativa(s) inválida(s) em ${authAccess.rows[0].identifiers} conta(s) nos últimos 15 minutos.`, action: "Verificar possível ataque de força bruta" });
     if (requests.rows[0]?.pending) alerts.push({ id: "requests", severity: "INFO", title: "Solicitações aguardando análise", message: `${requests.rows[0].pending} solicitação(ões) está(ão) pendente(s) há mais de 48 horas.`, action: "Revisar solicitações de plano" });
     const order = { CRITICAL: 0, WARNING: 1, INFO: 2 };
     alerts.sort((a, b) => order[a.severity] - order[b.severity]);

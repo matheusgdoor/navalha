@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { query } from "@/lib/db";
 import { createPlatformSession, PLATFORM_COOKIE } from "@/lib/platform-auth";
+import { loginBlocked, loginIdentity, recordLogin } from "@/lib/login-security";
 
 const schema = z.object({
   email: z.string().email(),
@@ -11,6 +12,9 @@ const schema = z.object({
 export async function POST(request: Request) {
   try {
     const body = schema.parse(await request.json());
+    const identity = loginIdentity(request, body.email);
+    if (await loginBlocked("PLATFORM", identity))
+      return NextResponse.json({ error: "Muitas tentativas. Aguarde 15 minutos e tente novamente." }, { status: 429, headers: { "Retry-After": "900" } });
     const user = (
       await query<any>(
         `SELECT u.id,u.name,u.email,u.password_hash FROM users u
@@ -19,11 +23,14 @@ export async function POST(request: Request) {
         [body.email],
       )
     ).rows[0];
-    if (!user || !(await bcrypt.compare(body.password, user.password_hash)))
+    if (!user || !(await bcrypt.compare(body.password, user.password_hash))) {
+      await recordLogin("PLATFORM", identity, false);
       return NextResponse.json(
         { error: "Credenciais da plataforma inválidas" },
         { status: 401 },
       );
+    }
+    await recordLogin("PLATFORM", identity, true);
     const token = await createPlatformSession({
       sub: user.id,
       name: user.name,
