@@ -25,9 +25,9 @@ Next.js, como Vercel, Railway, Render, Fly.io ou equivalente, mantendo o Postgre
 - `APP_URL=https://seu-dominio`
 - `QUEUE_SECRET` aleatória e secreta
 - `BILLING_GRACE_DAYS=3`
-- `ASAAS_ENVIRONMENT=production`
-- `ASAAS_ACCESS_TOKEN`
-- `ASAAS_WEBHOOK_TOKEN` com 32 a 255 caracteres
+- `ASAAS_ENVIRONMENT=production` (quando a conta for aprovada)
+- `ASAAS_ACCESS_TOKEN` (opcional até a ativação das cobranças)
+- `ASAAS_WEBHOOK_TOKEN` com 32 a 255 caracteres (opcional até a ativação)
 
 ## Integrações
 
@@ -40,7 +40,7 @@ Next.js, como Vercel, Railway, Render, Fly.io ou equivalente, mantendo o Postgre
 
 - Trocar todas as credenciais locais e senhas administrativas.
 - Criar uma conta de administrador SaaS exclusiva, sem vínculo com empresa cliente.
-- Testar um pagamento Pix no sandbox e depois um pagamento real de baixo valor.
+- Antes de liberar cobranças, testar Pix e boleto no sandbox e depois um pagamento real de baixo valor.
 - Confirmar backup automático e restauração do PostgreSQL.
 - Configurar domínio, HTTPS, logs, alertas e política de retenção.
 - Manter pelo menos um ambiente de staging separado de produção.

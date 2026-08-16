@@ -34,10 +34,16 @@ export async function GET() {
     },
     {
       key: "asaas",
-      label: "Gateway Asaas",
+      label: "Gateway Asaas (ativar após aprovação)",
       ok: Boolean(
         process.env.ASAAS_ACCESS_TOKEN && process.env.ASAAS_WEBHOOK_TOKEN,
       ),
+      required: false,
+    },
+    {
+      key: "queueSecret",
+      label: "Chave das rotinas automáticas",
+      ok: Boolean(process.env.QUEUE_SECRET && process.env.QUEUE_SECRET.length >= 24 && !process.env.QUEUE_SECRET.includes("troque")),
       required: true,
     },
     {

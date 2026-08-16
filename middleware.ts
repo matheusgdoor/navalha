@@ -14,6 +14,11 @@ export function middleware(req: NextRequest) {
   if (platformRoute) return NextResponse.next();
   const hasSession = req.cookies.has("navalha_session");
   if (!hasSession) {
+    if (req.nextUrl.pathname.startsWith("/api/"))
+      return NextResponse.json(
+        { error: "Sessão necessária" },
+        { status: 401 },
+      );
     const url = new URL("/login", req.url);
     url.searchParams.set("next", req.nextUrl.pathname);
     return NextResponse.redirect(url);
