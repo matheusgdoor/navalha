@@ -45,6 +45,7 @@ export default function Platform() {
     [newNote, setNewNote] = useState(""),
     [noteCategory, setNoteCategory] = useState("SUPPORT"),
     [noteWorking, setNoteWorking] = useState(false),
+    [planWorking, setPlanWorking] = useState(""),
     [message, setMessage] = useState(""),
     [suspensionError, setSuspensionError] = useState(""),
     [suspensionWorking, setSuspensionWorking] = useState(false),
@@ -150,6 +151,18 @@ export default function Platform() {
     setNewNote("");
     setMessage("Anotação interna registrada.");
     load();
+  }
+  function changePlanField(code: string, field: string, value: number) {
+    setPlans((current) => current.map((plan) => plan.code === code ? { ...plan, [field]: value } : plan));
+  }
+  async function savePlan(plan: any) {
+    if (!confirm(`Confirmar novos valores do plano ${plan.name}? As empresas vinculadas passarão a usar esses limites.`)) return;
+    setPlanWorking(plan.code);
+    const response = await fetch(`/api/platform/plans/${plan.code}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify(plan) });
+    const data = await response.json().catch(() => ({}));
+    setPlanWorking("");
+    setMessage(response.ok ? `Plano ${plan.name} atualizado.` : data.error || "Não foi possível atualizar o plano.");
+    if (response.ok) load();
   }
   async function changeSuspension() {
     const suspending = !selected.manualSuspended;
@@ -418,6 +431,10 @@ export default function Platform() {
           ))}
         </div>
       </section>
+      <section className="panel planManagement">
+        <div className="planManagementHead"><div><p>CONFIGURAÇÃO COMERCIAL</p><h2>Planos e limites</h2><small>Alterações passam a valer imediatamente para as empresas vinculadas.</small></div></div>
+        <div className="planManagementGrid">{plans.map((plan) => <article key={plan.code}><header><span><small>{plan.code}</small><b>{plan.name}</b></span><strong>R$ <input aria-label={`Mensalidade ${plan.name}`} type="number" min="0" step="0.01" value={(plan.priceCents / 100).toFixed(2)} onChange={(e) => changePlanField(plan.code,"priceCents",Math.round(Number(e.target.value)*100))}/></strong></header><label>Barbeiros<input type="number" min="1" value={plan.barberLimit} onChange={(e) => changePlanField(plan.code,"barberLimit",Number(e.target.value))}/></label><label>Agendamentos/mês<input type="number" min="1" value={plan.appointmentLimit} onChange={(e) => changePlanField(plan.code,"appointmentLimit",Number(e.target.value))}/></label><label>WhatsApp/mês<input type="number" min="0" value={plan.whatsappLimit} onChange={(e) => changePlanField(plan.code,"whatsappLimit",Number(e.target.value))}/></label><button disabled={planWorking === plan.code} onClick={() => savePlan(plan)}>{planWorking === plan.code ? "Salvando..." : "Salvar configuração"}</button></article>)}</div>
+      </section>
       <section className="panel readinessCompact">
         <div>
           <Activity />
@@ -674,6 +691,7 @@ export default function Platform() {
   );
 }
 function auditDescription(event: any) {
+  if (event.action === "PLAN_UPDATED") return `Configuração do plano ${event.newData?.name || event.newData?.code || ""} atualizada`;
   if (event.action === "SUPPORT_NOTE_CREATED") return "Anotação interna adicionada";
   if (event.action === "PLAN_REQUEST_APPROVED") return "Solicitação de plano aprovada";
   if (event.action === "PLAN_REQUEST_REJECTED") return "Solicitação de plano recusada";
