@@ -28,7 +28,8 @@ export default function Subscription() {
     [billing, setBilling] = useState<any>(null),
     [message, setMessage] = useState(""),
     [sending, setSending] = useState(""),
-    [pix, setPix] = useState<any>(null);
+    [pix, setPix] = useState<any>(null),
+    [boleto, setBoleto] = useState<any>(null);
   const load = useCallback(async () => {
     const [a, b, payment] = await Promise.all([
       fetch("/api/subscription").then((r) => r.json()),
@@ -71,6 +72,12 @@ export default function Subscription() {
     setMessage(
       "Código Pix copiado. Abra o aplicativo do seu banco para pagar.",
     );
+  }
+  async function generateBoleto() {
+    setSending("BOLETO"); setMessage("");
+    const response = await fetch("/api/billing/boleto", { method: "POST" });
+    const result = await response.json(); setSending("");
+    if (response.ok) setBoleto(result); else setMessage(result.error);
   }
   if (!data?.current)
     return (
@@ -198,14 +205,14 @@ export default function Subscription() {
           <QrCode />
           <span>
             <small>RENOVAÇÃO MENSAL</small>
-            <h2>Renove com Pix</h2>
+            <h2>Renove com Pix ou boleto</h2>
             <p>
               Pagamento único de {money(c.priceCents)}. Após a confirmação, o
               acesso é prorrogado automaticamente por 30 dias.
             </p>
           </span>
         </div>
-        <button
+        <div className="renewalActions"><button
           onClick={generatePix}
           disabled={sending === "PIX" || !billing?.configured}
         >
@@ -214,8 +221,9 @@ export default function Subscription() {
             : billing?.configured
               ? "Gerar cobrança Pix"
               : "Asaas não configurado"}
-        </button>
+        </button><button onClick={generateBoleto} disabled={sending === "BOLETO" || !billing?.configured}>{sending === "BOLETO" ? "Gerando boleto..." : billing?.configured ? "Gerar boleto" : "Asaas não configurado"}</button></div>
       </section>
+      {boleto && <section className="panel boletoReady"><Check /><span><b>Boleto gerado com sucesso</b><small>Vencimento em {new Date(`${String(boleto.dueDate).slice(0,10)}T12:00:00`).toLocaleDateString("pt-BR")} · {money(boleto.amountCents)}</small></span>{boleto.url ? <a href={boleto.url} target="_blank" rel="noreferrer"><ExternalLink />Abrir boleto</a> : <em>Aguardando link do Asaas</em>}</section>}
       {message && <div className="subscriptionMessage">{message}</div>}
       <section className="billingProvider panel">
         <div>

@@ -155,7 +155,7 @@
   color: var(--muted);
   font-size: 9px;
 }
-.pixRenewal > button,
+.renewalActions button,
 .copyPix {
   border: 0;
   border-radius: 5px;
@@ -164,9 +164,10 @@
   color: #fff;
   white-space: nowrap;
 }
-.pixRenewal > button:disabled {
+.renewalActions button:disabled {
   opacity: 0.5;
 }
+.pixRenewal > .renewalActions{display:flex;gap:7px}.renewalActions button:last-child{background:#825b2b}.boletoReady{display:flex;align-items:center;gap:11px;margin:14px 0;padding:16px;border-left:3px solid #31866d}.boletoReady>svg{color:#31866d}.boletoReady span{display:grid;flex:1}.boletoReady small{font-size:9px;color:var(--muted)}.boletoReady a{display:inline-flex;align-items:center;gap:5px;padding:9px 12px;border-radius:5px;background:#825b2b;color:#fff;text-decoration:none;font-size:9px}.boletoReady a svg{width:14px}.boletoReady em{font-size:9px;color:var(--muted)}
 .pixModalBackdrop {
   position: fixed;
   inset: 0;
@@ -326,4 +327,5 @@
     align-items: stretch;
     flex-direction: column;
   }
+  .pixRenewal > .renewalActions{display:grid}.renewalActions button,.boletoReady a{width:100%;justify-content:center}.boletoReady{align-items:flex-start;flex-wrap:wrap}.boletoReady span{min-width:calc(100% - 40px)}
 }

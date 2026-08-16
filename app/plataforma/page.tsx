@@ -35,6 +35,8 @@ export default function Platform() {
     [plans, setPlans] = useState<any[]>([]),
     [overview, setOverview] = useState<any>(null),
     [billing, setBilling] = useState<any>(null),
+    [billingLifecycle, setBillingLifecycle] = useState<any>(null),
+    [lifecycleWorking, setLifecycleWorking] = useState(false),
     [readiness, setReadiness] = useState<any>(null),
     [monitoring, setMonitoring] = useState<any>(null),
     [audit, setAudit] = useState<any[]>([]),
@@ -51,7 +53,7 @@ export default function Platform() {
     [suspensionWorking, setSuspensionWorking] = useState(false),
     [forbidden, setForbidden] = useState(false);
   const load = useCallback(async () => {
-    const [o, r, p, ready, summary, billingResponse, monitoringResponse, auditResponse] = await Promise.all([
+    const [o, r, p, ready, summary, billingResponse, monitoringResponse, auditResponse, lifecycleResponse] = await Promise.all([
       fetch("/api/platform/organizations"),
       fetch("/api/platform/requests"),
       fetch("/api/platform/plans"),
@@ -60,6 +62,7 @@ export default function Platform() {
       fetch("/api/platform/billing"),
       fetch("/api/platform/monitoring"),
       fetch("/api/platform/audit?limit=30"),
+      fetch("/api/platform/billing-lifecycle"),
     ]);
     if (o.status === 403) {
       setForbidden(true);
@@ -73,6 +76,7 @@ export default function Platform() {
     setBilling(await billingResponse.json());
     setMonitoring(await monitoringResponse.json());
     setAudit((await auditResponse.json()).events || []);
+    setBillingLifecycle(await lifecycleResponse.json());
   }, []);
   useEffect(() => {
     load();
@@ -162,6 +166,15 @@ export default function Platform() {
     const data = await response.json().catch(() => ({}));
     setPlanWorking("");
     setMessage(response.ok ? `Plano ${plan.name} atualizado.` : data.error || "Não foi possível atualizar o plano.");
+    if (response.ok) load();
+  }
+  async function processBillingLifecycle() {
+    if (!confirm("Executar agora a verificação de vencimentos e suspensões automáticas?")) return;
+    setLifecycleWorking(true);
+    const response = await fetch("/api/platform/billing-lifecycle", { method: "POST" });
+    const data = await response.json().catch(() => ({}));
+    setLifecycleWorking(false);
+    setMessage(response.ok ? `Cobranças processadas: ${data.pastDue} em atraso e ${data.suspended} suspensa(s).` : data.error || "Falha ao processar cobranças.");
     if (response.ok) load();
   }
   async function changeSuspension() {
@@ -324,6 +337,7 @@ export default function Platform() {
           )}
         </div>
       </section>
+      <section className="panel lifecycleControl"><div><CalendarClock /><span><p>AUTOMAÇÃO DE COBRANÇA</p><h2>Ciclo de vencimentos</h2><small>Tolerância configurada: {billingLifecycle?.graceDays ?? 3} dia(s)</small></span></div><div className="lifecycleNumbers"><span><b>{billingLifecycle?.inGrace || 0}</b><small>Em tolerância</small></span><span><b>{billingLifecycle?.overdue || 0}</b><small>Fora do prazo</small></span><span><b>{billingLifecycle?.suspended || 0}</b><small>Suspensas</small></span></div><div className="lifecycleAction"><small>{billingLifecycle?.last?.createdAt ? `Última execução manual: ${new Date(billingLifecycle.last.createdAt).toLocaleString("pt-BR")}` : "Ainda não executado manualmente"}</small><button onClick={processBillingLifecycle} disabled={lifecycleWorking}>{lifecycleWorking ? "Processando..." : "Executar verificação agora"}</button></div></section>
       <section className="panel platformPayments">
         <div className="platformPaymentsHead">
           <span>
@@ -691,6 +705,7 @@ export default function Platform() {
   );
 }
 function auditDescription(event: any) {
+  if (event.action === "BILLING_LIFECYCLE_RUN") return `Ciclo de cobrança executado: ${event.newData?.pastDue || 0} em atraso, ${event.newData?.suspended || 0} suspensa(s)`;
   if (event.action === "PLAN_UPDATED") return `Configuração do plano ${event.newData?.name || event.newData?.code || ""} atualizada`;
   if (event.action === "SUPPORT_NOTE_CREATED") return "Anotação interna adicionada";
   if (event.action === "PLAN_REQUEST_APPROVED") return "Solicitação de plano aprovada";
