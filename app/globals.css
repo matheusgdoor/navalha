@@ -63,6 +63,23 @@ body {
   display: grid;
   gap: 7px;
 }
+.sidebarScroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 4px 12px 0;
+  scrollbar-width: thin;
+  scrollbar-color: #555b51 transparent;
+}
+.sidebarScroll::-webkit-scrollbar { width: 5px; }
+.sidebarScroll::-webkit-scrollbar-track { background: transparent; }
+.sidebarScroll::-webkit-scrollbar-thumb { background: #555b51; border-radius: 8px; }
+.sideActions {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #383c35;
+}
 .sidebar button {
   border: 0;
   background: none;
@@ -71,7 +88,7 @@ body {
   cursor: pointer;
 }
 .sidebar nav button,
-.sideBottom > button {
+.sideActions > button {
   display: flex;
   align-items: center;
   gap: 13px;
@@ -94,7 +111,7 @@ body {
   border-radius: 0 3px 3px 0;
 }
 .sideBottom {
-  margin-top: auto;
+  flex-shrink: 0;
   border-top: 1px solid #383c35;
   padding-top: 15px;
 }

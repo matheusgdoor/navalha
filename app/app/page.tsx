@@ -330,7 +330,8 @@ export default function Home() {
             <X />
           </button>
         </div>
-        <nav>
+        <div className="sidebarScroll">
+          <nav>
           {visibleNav.map(({ label, icon: Icon }) => (
             <button
               key={label}
@@ -352,8 +353,8 @@ export default function Home() {
               {label}
             </button>
           ))}
-        </nav>
-        <div className="sideBottom">
+          </nav>
+          <div className="sideActions">
           {currentUser?.organizationSlug && (
             <>
               <button
@@ -408,6 +409,9 @@ export default function Home() {
             <Settings size={19} />
             Configurações
           </button>
+          </div>
+        </div>
+        <div className="sideBottom">
           <div className="profile">
             <span>
               {currentUser?.name
