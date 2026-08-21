@@ -186,7 +186,7 @@
   width: 18px;
   color: #a87334;
 }
-.selectedOrganization span {
+.selectedOrganization .selectedOrgInfo {
   display: grid;
   gap: 2px;
 }
@@ -196,6 +196,27 @@
 .selectedOrganization small {
   color: #74786f;
   font-size: 9px;
+}
+.selectedOrganization .selectedDescription {
+  color: #5f655e;
+  font-size: 9px;
+  line-height: 1.45;
+  font-style: normal;
+  margin-top: 2px;
+}
+.selectedContacts {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+.selectedContacts:empty {
+  display: none;
+}
+.selectedContacts a {
+  color: #96652e;
+  font-size: 8px;
+  font-weight: 700;
+  text-decoration: none;
 }
 .selectedOrganization button {
   border: 0;
@@ -307,12 +328,19 @@
   width: 11px;
   flex: 0 0 auto;
 }
-.organizationShowcase em {
+.organizationShowcase .organizationMetrics {
   color: #777c75;
   font-size: 8px;
   line-height: 1.5;
   font-style: normal;
   text-align: right;
+}
+.organizationShowcase .organizationDescription {
+  color: #777c75;
+  font-size: 8px;
+  line-height: 1.4;
+  font-style: normal;
+  white-space: normal;
 }
 .organizationShowcase button > b {
   color: #ad7631;
@@ -467,7 +495,7 @@ body:has(.publicBooking) .pwaInstall {
   .organizationShowcase button {
     grid-template-columns: auto 1fr auto;
   }
-  .organizationShowcase em {
+  .organizationShowcase .organizationMetrics {
     display: none;
   }
 }

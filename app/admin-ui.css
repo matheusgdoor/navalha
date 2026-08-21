@@ -26,11 +26,18 @@
   font-weight: 600;
   margin-bottom: 13px;
 }
-.adminForm input {
+.adminForm input,
+.adminForm textarea {
   height: 40px;
   border: 1px solid var(--line);
   border-radius: 5px;
   padding: 0 10px;
+}
+.adminForm textarea {
+  min-height: 88px;
+  padding: 10px;
+  resize: vertical;
+  font: inherit;
 }
 .adminForm input[type="color"] {
   padding: 4px;
@@ -94,16 +101,29 @@
   font-weight: 700;
   text-decoration: none;
 }
-.reportExportPdf { background: #b77b2b; }
+.reportExportPdf {
+  background: #b77b2b;
+}
 .paymentMethods {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 12px;
   margin-bottom: 18px;
 }
-.paymentMethods .panel { padding: 14px 16px; display: grid; gap: 4px; }
-.paymentMethods small, .paymentMethods span { color: var(--muted); font-size: 10px; }
-.paymentMethods strong { font-family: var(--serif); font-size: 19px; }
+.paymentMethods .panel {
+  padding: 14px 16px;
+  display: grid;
+  gap: 4px;
+}
+.paymentMethods small,
+.paymentMethods span {
+  color: var(--muted);
+  font-size: 10px;
+}
+.paymentMethods strong {
+  font-family: var(--serif);
+  font-size: 19px;
+}
 .dateFilter span {
   font-size: 10px;
   color: var(--muted);
@@ -116,26 +136,58 @@
   grid-template-columns: 1.3fr 0.8fr 1fr 0.7fr 1fr;
 }
 .reportTable strong {
-    text-align: right;
-    color: #55705a;
-  }
-.commissionHistory { margin-top: 18px; padding: 20px; }
-.commissionHistory article { display: grid; grid-template-columns: 1fr auto auto auto; align-items: center; gap: 14px; padding: 12px 0; border-top: 1px solid var(--line); }
-.commissionHistory article div { display: grid; }
-.commissionHistory small { color: var(--muted); font-size: 9px; }
-.commissionHistory article > span { font-size: 9px; padding: 5px 9px; border-radius: 12px; }
-.commissionPaid { color: #55705a; background: #e3ece4; }
-.commissionPending { color: #8c622d; background: #f1e7d8; }
-.commissionHistory button { border: 1px solid var(--line); background: #fff; border-radius: 5px; padding: 7px 10px; font-size: 9px; cursor: pointer; }
+  text-align: right;
+  color: #55705a;
+}
+.commissionHistory {
+  margin-top: 18px;
+  padding: 20px;
+}
+.commissionHistory article {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+.commissionHistory article div {
+  display: grid;
+}
+.commissionHistory small {
+  color: var(--muted);
+  font-size: 9px;
+}
+.commissionHistory article > span {
+  font-size: 9px;
+  padding: 5px 9px;
+  border-radius: 12px;
+}
+.commissionPaid {
+  color: #55705a;
+  background: #e3ece4;
+}
+.commissionPending {
+  color: #8c622d;
+  background: #f1e7d8;
+}
+.commissionHistory button {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 5px;
+  padding: 7px 10px;
+  font-size: 9px;
+  cursor: pointer;
+}
 @media (max-width: 900px) {
   .adminSplit {
     grid-template-columns: 1fr;
   }
   .dateFilter {
-      margin-top: 15px;
-      flex-wrap: wrap;
-      width: 100%;
-    }
+    margin-top: 15px;
+    flex-wrap: wrap;
+    width: 100%;
+  }
   .managementHead {
     align-items: start;
     flex-direction: column;
@@ -145,12 +197,16 @@
     grid-template-columns: 1fr 0.7fr 1fr;
   }
   .reportTable :nth-child(2),
-    .reportTable :nth-child(4) {
-      display: none;
-    }
-    .commissionHistory article { grid-template-columns: 1fr auto; }
-    .commissionHistory article > span { justify-self: start; }
+  .reportTable :nth-child(4) {
+    display: none;
   }
+  .commissionHistory article {
+    grid-template-columns: 1fr auto;
+  }
+  .commissionHistory article > span {
+    justify-self: start;
+  }
+}
 @media (max-width: 600px) {
   .adminSplit {
     gap: 14px;
@@ -171,4 +227,18 @@
     padding: 14px;
   }
 }
-.cashShortcut{display:inline-flex;align-items:center;gap:8px;background:#b77b2b;color:#fff;text-decoration:none;padding:11px 15px;border-radius:5px;font-size:10px;font-weight:700}.cashShortcut svg{width:16px}
+.cashShortcut {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #b77b2b;
+  color: #fff;
+  text-decoration: none;
+  padding: 11px 15px;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 700;
+}
+.cashShortcut svg {
+  width: 16px;
+}

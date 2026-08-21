@@ -110,6 +110,21 @@ export default function AdminCenter() {
           />
           <Field name="address" label="Endereço" value={settings.address} />
           <label>
+            Apresentação na página pública
+            <textarea
+              name="publicDescription"
+              maxLength={240}
+              defaultValue={settings.publicDescription || ""}
+              placeholder="Conte aos clientes o que torna sua barbearia especial."
+            />
+          </label>
+          <Field
+            name="instagram"
+            label="Instagram"
+            value={settings.instagram}
+            placeholder="nomedabarbearia"
+          />
+          <label>
             Fuso horário
             <select name="timezone" defaultValue={settings.timezone}>
               <option>America/Cuiaba</option>
@@ -179,8 +194,14 @@ export default function AdminCenter() {
       </section>
       <section className="panel auditPanel">
         <div className="privacyHead">
-          <h2><ShieldCheck />Auditoria LGPD</h2>
-          <select value={privacyFilter} onChange={(event) => setPrivacyFilter(event.target.value)}>
+          <h2>
+            <ShieldCheck />
+            Auditoria LGPD
+          </h2>
+          <select
+            value={privacyFilter}
+            onChange={(event) => setPrivacyFilter(event.target.value)}
+          >
             <option value="ALL">Todas as ações</option>
             <option value="CONSENT">Consentimentos</option>
             <option value="ORGANIZATION_EXPORT">Exportações</option>
@@ -188,16 +209,45 @@ export default function AdminCenter() {
           </select>
         </div>
         <div className="privacyMetrics">
-          <span><small>Consentimentos ativos</small><b>{privacy.summary?.consents || 0}</b></span>
-          <span><small>Exportações</small><b>{privacy.summary?.exports || 0}</b></span>
-          <span><small>Anonimizações</small><b>{privacy.summary?.anonymizations || 0}</b></span>
+          <span>
+            <small>Consentimentos ativos</small>
+            <b>{privacy.summary?.consents || 0}</b>
+          </span>
+          <span>
+            <small>Exportações</small>
+            <b>{privacy.summary?.exports || 0}</b>
+          </span>
+          <span>
+            <small>Anonimizações</small>
+            <b>{privacy.summary?.anonymizations || 0}</b>
+          </span>
         </div>
         <div className="privacyHistory">
-          {privacy.history?.length ? privacy.history.map((item: any) => <article key={`${item.category}-${item.id}`}>
-            <span className={`privacyType ${item.category.toLowerCase()}`}>{item.type === "TERMS_AND_PRIVACY" ? "ACEITE" : item.type === "ORGANIZATION_EXPORT" ? "EXPORTAÇÃO" : item.type === "CLIENT_ANONYMIZATION" ? "ANONIMIZAÇÃO" : item.type}</span>
-            <div><b>{item.subject}</b><small>{item.source} · {item.status}{item.revokedAt ? " · Revogado" : ""}</small></div>
-            <time>{new Date(item.createdAt).toLocaleString("pt-BR")}</time>
-          </article>) : <div className="emptyState">Nenhuma ação LGPD registrada.</div>}
+          {privacy.history?.length ? (
+            privacy.history.map((item: any) => (
+              <article key={`${item.category}-${item.id}`}>
+                <span className={`privacyType ${item.category.toLowerCase()}`}>
+                  {item.type === "TERMS_AND_PRIVACY"
+                    ? "ACEITE"
+                    : item.type === "ORGANIZATION_EXPORT"
+                      ? "EXPORTAÇÃO"
+                      : item.type === "CLIENT_ANONYMIZATION"
+                        ? "ANONIMIZAÇÃO"
+                        : item.type}
+                </span>
+                <div>
+                  <b>{item.subject}</b>
+                  <small>
+                    {item.source} · {item.status}
+                    {item.revokedAt ? " · Revogado" : ""}
+                  </small>
+                </div>
+                <time>{new Date(item.createdAt).toLocaleString("pt-BR")}</time>
+              </article>
+            ))
+          ) : (
+            <div className="emptyState">Nenhuma ação LGPD registrada.</div>
+          )}
         </div>
       </section>
       <section className="panel auditPanel">
@@ -230,11 +280,13 @@ function Field({
   label,
   type = "text",
   value,
+  placeholder,
 }: {
   name: string;
   label: string;
   type?: string;
   value?: string;
+  placeholder?: string;
 }) {
   return (
     <label>
@@ -243,6 +295,7 @@ function Field({
         name={name}
         type={type}
         defaultValue={value || ""}
+        placeholder={placeholder}
         inputMode={
           name === "phone" ? "tel" : name === "document" ? "numeric" : undefined
         }

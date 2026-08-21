@@ -22,6 +22,9 @@ type PublicOrganization = {
   name: string;
   slug: string;
   address?: string;
+  phone?: string;
+  description?: string;
+  instagram?: string;
   barbers: number;
   services: number;
 };
@@ -281,13 +284,42 @@ function Booking() {
           {organization && (
             <div className="selectedOrganization">
               <MapPin />
-              <span>
+              <div className="selectedOrgInfo">
                 <b>{catalog.organization?.name || "Barbearia selecionada"}</b>
                 <small>
                   {organizations.find((item) => item.slug === organization)
                     ?.address || "Agenda online disponível"}
                 </small>
-              </span>
+                {organizations.find((item) => item.slug === organization)
+                  ?.description && (
+                  <em className="selectedDescription">
+                    {
+                      organizations.find((item) => item.slug === organization)
+                        ?.description
+                    }
+                  </em>
+                )}
+                <div className="selectedContacts">
+                  {organizations.find((item) => item.slug === organization)
+                    ?.phone && (
+                    <a
+                      href={`tel:${organizations.find((item) => item.slug === organization)?.phone}`}
+                    >
+                      Telefone
+                    </a>
+                  )}
+                  {organizations.find((item) => item.slug === organization)
+                    ?.instagram && (
+                    <a
+                      href={`https://instagram.com/${organizations.find((item) => item.slug === organization)?.instagram}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Instagram ↗
+                    </a>
+                  )}
+                </div>
+              </div>
               <button type="button" onClick={() => chooseOrganization("")}>
                 Trocar
               </button>
@@ -323,8 +355,13 @@ function Booking() {
                         <MapPin />
                         {item.address || "Atendimento com hora marcada"}
                       </small>
+                      {item.description && (
+                        <em className="organizationDescription">
+                          {item.description}
+                        </em>
+                      )}
                     </span>
-                    <em>
+                    <em className="organizationMetrics">
                       {item.services} serviços
                       <br />
                       {item.barbers} profissionais
