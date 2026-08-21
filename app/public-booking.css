@@ -27,6 +27,18 @@
   position: relative;
   z-index: 1;
 }
+.publicBackHome {
+  position: absolute;
+  top: 55px;
+  right: 12%;
+  z-index: 2;
+  color: #e9e5dc;
+  text-decoration: none;
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #ffffff55;
+  padding-bottom: 3px;
+}
 .publicIntro p,
 .publicForm > p {
   font-size: 9px;
@@ -60,17 +72,86 @@
   color: #d9a45d;
 }
 .publicFormArea {
-  padding: 40px;
+  padding: 46px clamp(24px, 5vw, 76px);
   display: grid;
   place-items: center;
 }
 .publicForm {
-  width: min(620px, 100%);
+  width: min(680px, 100%);
   background: #fff;
   border: 1px solid var(--line);
   border-radius: 16px;
   padding: 34px;
   box-shadow: 0 24px 70px #362b1d12;
+}
+.bookingFormTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.bookingFormTop > p {
+  margin: 0;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: #c18a43;
+  font-weight: 700;
+}
+.bookingFormTop > span {
+  padding: 6px 9px;
+  border-radius: 20px;
+  background: #edf3ed;
+  color: #55705a;
+  font-size: 8px;
+  font-weight: 700;
+}
+.bookingSteps {
+  display: grid;
+  grid-template-columns: auto 1fr auto 1fr auto;
+  align-items: center;
+  gap: 9px;
+  margin: -4px 0 24px;
+  padding: 12px 0 16px;
+  border-bottom: 1px solid #eee9e0;
+}
+.bookingSteps > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #999b96;
+  font-size: 8px;
+  white-space: nowrap;
+}
+.bookingSteps > span i {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #eeeae3;
+  font-style: normal;
+  font-weight: 700;
+}
+.bookingSteps > span i svg {
+  width: 11px;
+}
+.bookingSteps > span.active {
+  color: #8d5f29;
+  font-weight: 700;
+}
+.bookingSteps > span.active i {
+  background: #ad7631;
+  color: #fff;
+}
+.bookingSteps > span.done {
+  color: #55705a;
+}
+.bookingSteps > span.done i {
+  background: #e3eee4;
+  color: #55705a;
+}
+.bookingSteps > b {
+  height: 1px;
+  background: #e1ddd5;
 }
 .organizationPicker > div {
   position: relative;
@@ -84,7 +165,7 @@
   color: #a87334;
   pointer-events: none;
 }
-.organizationPicker select {
+.publicForm .organizationPicker select {
   width: 100%;
   height: 50px;
   padding-left: 40px;
@@ -148,6 +229,99 @@
   max-width: 330px;
   font-size: 10px;
   line-height: 1.6;
+}
+.organizationShowcase {
+  display: grid;
+  gap: 14px;
+  margin-top: 6px;
+}
+.organizationShowcase > div {
+  display: grid;
+  gap: 3px;
+}
+.organizationShowcase > div b {
+  font: 600 17px "Playfair Display";
+}
+.organizationShowcase > div span {
+  color: #777c75;
+  font-size: 9px;
+}
+.organizationShowcase > section {
+  display: grid;
+  gap: 9px;
+  max-height: 300px;
+  overflow: auto;
+  padding-right: 3px;
+}
+.organizationShowcase button {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 12px;
+  padding: 13px;
+  border: 1px solid #e2dbd0;
+  border-radius: 10px;
+  background: #fff;
+  color: #252a25;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.organizationShowcase button:hover {
+  transform: translateY(-2px);
+  border-color: #b98545;
+  box-shadow: 0 10px 28px #49351c12;
+}
+.organizationShowcase button > i {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: #f4eadc;
+  color: #a56f2f;
+}
+.organizationShowcase button > i svg {
+  width: 20px;
+}
+.organizationShowcase button > span {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+.organizationShowcase strong {
+  font: 600 14px "Playfair Display";
+}
+.organizationShowcase small {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #777c75;
+  font-size: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.organizationShowcase small svg {
+  width: 11px;
+  flex: 0 0 auto;
+}
+.organizationShowcase em {
+  color: #777c75;
+  font-size: 8px;
+  line-height: 1.5;
+  font-style: normal;
+  text-align: right;
+}
+.organizationShowcase button > b {
+  color: #ad7631;
+  font-size: 17px;
+}
+body:has(.publicBooking) .pwaInstall {
+  padding: 8px 12px;
+  font-size: 9px;
+  opacity: 0.86;
 }
 .publicForm h2 {
   font: 600 27px "Playfair Display";
@@ -266,6 +440,10 @@
     min-height: 260px;
     background-position: center 34%;
   }
+  .publicBackHome {
+    top: 25px;
+    right: 25px;
+  }
   .publicIntro h1 {
     font-size: 30px;
   }
@@ -277,5 +455,19 @@
   }
   .publicTrust {
     margin-top: 16px;
+  }
+  .bookingSteps {
+    grid-template-columns: auto 1fr auto 1fr auto;
+    gap: 5px;
+  }
+  .bookingSteps > span {
+    font-size: 0;
+    gap: 0;
+  }
+  .organizationShowcase button {
+    grid-template-columns: auto 1fr auto;
+  }
+  .organizationShowcase em {
+    display: none;
   }
 }

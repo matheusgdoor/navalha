@@ -192,6 +192,9 @@ function Booking() {
             <small>AGENDE NAS MELHORES BARBEARIAS</small>
           </span>
         </div>
+        <a className="publicBackHome" href="/">
+          Conheça a plataforma <span>↗</span>
+        </a>
         <div>
           <p>SEU PRÓXIMO CORTE COMEÇA AQUI</p>
           <h1>
@@ -217,12 +220,40 @@ function Booking() {
       </section>
       <section className="publicFormArea">
         <form className="publicForm" onSubmit={submit}>
-          <p>RESERVA DE HORÁRIO</p>
+          <div className="bookingFormTop">
+            <p>RESERVA DE HORÁRIO</p>
+            <span>
+              {organizations.length || "—"} barbearia
+              {organizations.length === 1 ? "" : "s"} disponível
+              {organizations.length === 1 ? "" : "is"}
+            </span>
+          </div>
           <h2>
             {organization
               ? `Agendar em ${catalog.organization?.name || "sua barbearia"}`
               : "Encontre sua barbearia"}
           </h2>
+          <div className="bookingSteps" aria-label="Etapas do agendamento">
+            <span className={organization ? "done" : "active"}>
+              <i>{organization ? <Check /> : "1"}</i>Barbearia
+            </span>
+            <b />
+            <span
+              className={
+                organization && (!barber || !date)
+                  ? "active"
+                  : barber && date
+                    ? "done"
+                    : ""
+              }
+            >
+              <i>{barber && date ? <Check /> : "2"}</i>Serviço e horário
+            </span>
+            <b />
+            <span className={slot ? "active" : ""}>
+              <i>3</i>Seus dados
+            </span>
+          </div>
           <label className="organizationPicker">
             Barbearia
             <div>
@@ -271,13 +302,37 @@ function Booking() {
             </a>
           )}
           {!organization && !organizationsLoading && (
-            <div className="bookingStartState">
-              <Store />
-              <b>Selecione acima onde deseja ser atendido</b>
-              <span>
-                Depois você poderá escolher serviço, profissional, data e
-                horário.
-              </span>
+            <div className="organizationShowcase">
+              <div>
+                <b>Escolha uma barbearia</b>
+                <span>Agendas verificadas e horários atualizados.</span>
+              </div>
+              <section>
+                {organizations.map((item) => (
+                  <button
+                    type="button"
+                    key={item.slug}
+                    onClick={() => chooseOrganization(item.slug)}
+                  >
+                    <i>
+                      <Store />
+                    </i>
+                    <span>
+                      <strong>{item.name}</strong>
+                      <small>
+                        <MapPin />
+                        {item.address || "Atendimento com hora marcada"}
+                      </small>
+                    </span>
+                    <em>
+                      {item.services} serviços
+                      <br />
+                      {item.barbers} profissionais
+                    </em>
+                    <b>→</b>
+                  </button>
+                ))}
+              </section>
             </div>
           )}
           {catalogLoading && (
