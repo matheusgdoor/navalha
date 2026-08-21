@@ -329,6 +329,89 @@
   font: 600 13px "Playfair Display";
   color: #d8ddd7;
 }
+.clientJourney {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  min-height: 620px;
+  background: #fff;
+}
+.clientJourneyPhoto {
+  min-height: 620px;
+  background:
+    linear-gradient(180deg, #17201918, #17201980),
+    url("/navalha-premium-hero.png") center / cover;
+}
+.clientJourneyCopy {
+  padding: 85px clamp(40px, 7vw, 110px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.clientJourneyCopy > p {
+  color: #a87334;
+  font-size: 8px;
+  letter-spacing: 2.2px;
+  font-weight: 700;
+}
+.clientJourneyCopy > h2 {
+  max-width: 650px;
+  margin: 12px 0 16px;
+  font: 600 clamp(36px, 4vw, 58px)/1.08 "Playfair Display";
+}
+.clientJourneyCopy > span {
+  max-width: 620px;
+  color: #70756e;
+  line-height: 1.7;
+}
+.clientJourneyCopy > div {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 32px 0;
+}
+.clientJourneyCopy article {
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  padding: 17px 12px;
+  border-top: 1px solid #d9d2c6;
+}
+.clientJourneyCopy article i {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #f1e5d4;
+  color: #a87334;
+}
+.clientJourneyCopy article svg {
+  width: 15px;
+}
+.clientJourneyCopy article b {
+  font: 600 13px "Playfair Display";
+}
+.clientJourneyCopy article small {
+  color: #7b8079;
+  font-size: 8px;
+  line-height: 1.5;
+}
+.clientJourneyCopy > a {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 19px;
+  border-radius: 5px;
+  background: #b77a31;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.clientJourneyCopy > a svg {
+  width: 15px;
+}
 .landingSection {
   padding: 95px 6%;
 }
@@ -556,6 +639,12 @@
   .featureGrid {
     grid-template-columns: 1fr 1fr;
   }
+  .clientJourney {
+    grid-template-columns: 1fr;
+  }
+  .clientJourneyPhoto {
+    min-height: 420px;
+  }
   .howSection {
     grid-template-columns: 1fr;
   }
@@ -609,6 +698,16 @@
   }
   .featureGrid {
     grid-template-columns: 1fr;
+  }
+  .clientJourneyPhoto {
+    min-height: 330px;
+  }
+  .clientJourneyCopy {
+    padding: 55px 15px;
+  }
+  .clientJourneyCopy > div {
+    grid-template-columns: 1fr;
+    gap: 0;
   }
   .landingSection,
   .howSection,

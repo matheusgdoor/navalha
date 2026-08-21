@@ -3,6 +3,8 @@ import {
   CalendarCheck,
   ChartNoAxesCombined,
   Check,
+  Clock3,
+  MapPin,
   MessageCircle,
   Scissors,
   ShieldCheck,
@@ -48,6 +50,7 @@ export default function Landing() {
         </a>
         <nav>
           <a href="#recursos">Recursos</a>
+          <a href="#agendamento">Para clientes</a>
           <a href="#planos">Planos</a>
           <a href="/agendar">Agendar</a>
           <a href="#duvidas">Dúvidas</a>
@@ -111,6 +114,47 @@ export default function Landing() {
         <b>Equipe</b>
         <b>Financeiro</b>
         <b>WhatsApp</b>
+      </section>
+      <section className="clientJourney" id="agendamento">
+        <div
+          className="clientJourneyPhoto"
+          role="img"
+          aria-label="Atendimento em uma barbearia moderna"
+        />
+        <div className="clientJourneyCopy">
+          <p>PARA QUEM QUER CUIDAR DO VISUAL</p>
+          <h2>Escolha. Agende. Chegue no horário.</h2>
+          <span>
+            O Navalha conecta você às barbearias cadastradas e mostra serviços,
+            profissionais e horários disponíveis em um único fluxo.
+          </span>
+          <div>
+            <article>
+              <i>
+                <MapPin />
+              </i>
+              <b>Escolha a barbearia</b>
+              <small>Encontre onde deseja ser atendido.</small>
+            </article>
+            <article>
+              <i>
+                <Scissors />
+              </i>
+              <b>Defina o serviço</b>
+              <small>Selecione atendimento e profissional.</small>
+            </article>
+            <article>
+              <i>
+                <Clock3 />
+              </i>
+              <b>Reserve o horário</b>
+              <small>Confirme seus dados em poucos minutos.</small>
+            </article>
+          </div>
+          <a href="/agendar">
+            Encontrar uma barbearia <ArrowRight />
+          </a>
+        </div>
       </section>
       <section className="landingSection" id="recursos">
         <div className="sectionIntro">
@@ -225,8 +269,8 @@ export default function Landing() {
           <details>
             <summary>Meus clientes conseguem agendar sozinhos?</summary>
             <p>
-              Sim. Cada empresa possui uma página pública exclusiva para
-              agendamento.
+              Sim. O cliente escolhe a barbearia no portal público e conclui o
+              agendamento com serviço, profissional, data e horário.
             </p>
           </details>
           <details>
