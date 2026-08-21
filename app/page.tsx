@@ -52,7 +52,9 @@ export default function Landing() {
           <a href="#recursos">Recursos</a>
           <a href="#agendamento">Para clientes</a>
           <a href="#planos">Planos</a>
-          <a href="/agendar">Agendar</a>
+          <a className="navSchedule" href="/agendar">
+            Agendar
+          </a>
           <a href="#duvidas">Dúvidas</a>
         </nav>
         <div>
@@ -93,6 +95,13 @@ export default function Landing() {
             src="/navalha-premium-hero.png"
             alt="Barbeiro atendendo um cliente em uma barbearia moderna"
           />
+          <div className="heroPhotoBadge">
+            <i />
+            <span>
+              <b>Agenda online</b>
+              <small>Aberta 24 horas para seus clientes</small>
+            </span>
+          </div>
           <div className="heroPhotoCard">
             <span>
               <Scissors />

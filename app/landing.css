@@ -6,16 +6,26 @@
   margin: 0;
 }
 .landingNav {
-  height: 78px;
+  height: 82px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 6%;
-  background: #fff;
+  background: #fffdfaf2;
+  backdrop-filter: blur(16px);
   border-bottom: 1px solid #e8e4dc;
   position: sticky;
   top: 0;
   z-index: 20;
+}
+.landingNav::after {
+  content: "";
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d4c4ad, transparent);
 }
 .landingBrand {
   display: flex;
@@ -55,6 +65,10 @@
   color: #4f554e;
   text-decoration: none;
 }
+.landingNav nav .navSchedule {
+  color: #9a672d;
+  font-weight: 700;
+}
 .landingNav > div {
   display: flex;
   gap: 10px;
@@ -71,13 +85,21 @@
   font-size: 10px;
   font-weight: 600;
 }
+.navCta {
+  box-shadow: 0 9px 25px #a46d292c;
+  transition: 0.2s ease;
+}
+.navCta:hover {
+  transform: translateY(-1px);
+  background: #a96f29;
+}
 .hero {
-  min-height: 650px;
-  padding: 70px 6% 80px;
+  min-height: calc(100svh - 82px);
+  padding: 48px 6% 58px;
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-columns: 0.92fr 1.08fr;
   align-items: center;
-  gap: 6%;
+  gap: 5%;
   background:
     radial-gradient(circle at 85% 10%, #eadbc6 0, transparent 27%), #f7f5f0;
 }
@@ -99,9 +121,10 @@
   width: 14px;
 }
 .heroCopy h1 {
-  font: 600 clamp(40px, 4.6vw, 68px)/1.05 "Playfair Display";
-  margin: 18px 0;
-  max-width: 700px;
+  font: 600 clamp(40px, 4.15vw, 62px)/1.03 "Playfair Display";
+  letter-spacing: -1.8px;
+  margin: 16px 0;
+  max-width: 620px;
 }
 .heroCopy > span {
   color: #686d66;
@@ -151,11 +174,12 @@
 }
 .heroVisual.heroPhoto {
   position: relative;
-  min-height: 550px;
+  min-height: min(540px, calc(100svh - 150px));
   padding: 0;
   overflow: hidden;
   border: 0;
   background: #1c211d;
+  box-shadow: 0 32px 85px #3425122b;
 }
 .heroPhoto > img {
   width: 100%;
@@ -169,6 +193,39 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg, transparent 50%, #111711b8 100%);
+}
+.heroPhotoBadge {
+  position: absolute;
+  z-index: 2;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 13px;
+  border: 1px solid #ffffff47;
+  border-radius: 8px;
+  color: #fff;
+  background: #182019c9;
+  backdrop-filter: blur(12px);
+}
+.heroPhotoBadge i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #83a983;
+  box-shadow: 0 0 0 4px #83a98320;
+}
+.heroPhotoBadge span {
+  display: grid;
+  gap: 1px;
+}
+.heroPhotoBadge b {
+  font-size: 9px;
+}
+.heroPhotoBadge small {
+  color: #cfd4cd;
+  font-size: 7px;
 }
 .heroPhotoCard {
   position: absolute;
@@ -320,6 +377,9 @@
   justify-content: center;
   gap: 50px;
   padding: 20px 6%;
+}
+body:has(.landing) > .pwaInstall {
+  display: none;
 }
 .trustStrip span {
   color: #9ba39b;
@@ -636,6 +696,9 @@
   .heroVisual.heroPhoto {
     min-height: 460px;
   }
+  .heroCopy h1 {
+    max-width: 760px;
+  }
   .featureGrid {
     grid-template-columns: 1fr 1fr;
   }
@@ -673,10 +736,11 @@
     display: none;
   }
   .hero {
-    padding: 40px 15px 60px;
+    padding: 38px 15px 55px;
   }
   .heroCopy h1 {
-    font-size: 40px;
+    font-size: 42px;
+    letter-spacing: -1px;
   }
   .heroCopy > small {
     flex-wrap: wrap;
@@ -692,6 +756,10 @@
     left: 14px;
     right: 14px;
     bottom: 14px;
+  }
+  .heroPhotoBadge {
+    top: 14px;
+    right: 14px;
   }
   .demoMetrics {
     grid-template-columns: 1fr;
