@@ -1,6 +1,13 @@
 "use client";
 import { FormEvent, Suspense, useEffect, useRef, useState } from "react";
-import { CalendarDays, Check, Clock3, Scissors } from "lucide-react";
+import {
+  CalendarDays,
+  Check,
+  Clock3,
+  MapPin,
+  Scissors,
+  Store,
+} from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { maskCpf, maskPhone } from "@/lib/masks";
 type Service = {
@@ -11,6 +18,13 @@ type Service = {
 };
 type Barber = { id: string; name: string; color: string };
 type Slot = { startsAt: string; status: "AVAILABLE" | "RESERVED" | "BLOCKED" };
+type PublicOrganization = {
+  name: string;
+  slug: string;
+  address?: string;
+  barbers: number;
+  services: number;
+};
 const money = (c: number) =>
   new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(
     c / 100,
@@ -31,12 +45,15 @@ export default function BookingPage() {
 
 function Booking() {
   const requestKey = useRef(crypto.randomUUID());
-  const organization = useSearchParams().get("organization") || "navalha";
+  const initialOrganization = useSearchParams().get("organization") || "";
   const [catalog, setCatalog] = useState<{
       organization?: { name: string; slug: string };
       services: Service[];
       barbers: Barber[];
     }>({ services: [], barbers: [] }),
+    [organizations, setOrganizations] = useState<PublicOrganization[]>([]),
+    [organization, setOrganization] = useState(initialOrganization),
+    [organizationsLoading, setOrganizationsLoading] = useState(true),
     [service, setService] = useState(""),
     [barber, setBarber] = useState(""),
     [date, setDate] = useState(""),
@@ -44,9 +61,27 @@ function Booking() {
     [slot, setSlot] = useState(""),
     [done, setDone] = useState(false),
     [error, setError] = useState(""),
-    [catalogLoading, setCatalogLoading] = useState(true),
+    [catalogLoading, setCatalogLoading] = useState(
+      Boolean(initialOrganization),
+    ),
     [loading, setLoading] = useState(false);
   useEffect(() => {
+    fetch("/api/public/organizations")
+      .then((response) => response.json())
+      .then((data) =>
+        setOrganizations(
+          Array.isArray(data.organizations) ? data.organizations : [],
+        ),
+      )
+      .catch(() => setOrganizations([]))
+      .finally(() => setOrganizationsLoading(false));
+  }, []);
+  useEffect(() => {
+    if (!organization) {
+      setCatalog({ services: [], barbers: [] });
+      setCatalogLoading(false);
+      return;
+    }
     setCatalogLoading(true);
     setError("");
     fetch(
@@ -72,6 +107,19 @@ function Booking() {
       })
       .finally(() => setCatalogLoading(false));
   }, [organization]);
+  function chooseOrganization(value: string) {
+    setOrganization(value);
+    setService("");
+    setBarber("");
+    setDate("");
+    setSlot("");
+    setSlots([]);
+    setError("");
+    const url = value
+      ? `/agendar?organization=${encodeURIComponent(value)}`
+      : "/agendar";
+    window.history.replaceState({}, "", url);
+  }
   useEffect(() => {
     if (!service || !barber || !date) return;
     setSlot("");
@@ -140,38 +188,105 @@ function Booking() {
         <div className="loginLogo">
           <Scissors />
           <span>
-            {catalog.organization?.name || "NAVALHA"}
-            <small>AGENDE ONLINE</small>
+            NAVALHA
+            <small>AGENDE NAS MELHORES BARBEARIAS</small>
           </span>
         </div>
         <div>
-          <p>AGENDE ONLINE</p>
+          <p>SEU PRÓXIMO CORTE COMEÇA AQUI</p>
           <h1>
             Seu estilo.
             <br />
             No seu horário.
           </h1>
           <small>
-            Escolha o serviço, o profissional e o melhor momento para você.
+            Encontre sua barbearia, escolha o profissional e reserve em poucos
+            minutos.
           </small>
+          <div className="publicTrust">
+            <span>
+              <Check />
+              Agendamento seguro
+            </span>
+            <span>
+              <Check />
+              Horários em tempo real
+            </span>
+          </div>
         </div>
       </section>
       <section className="publicFormArea">
         <form className="publicForm" onSubmit={submit}>
           <p>RESERVA DE HORÁRIO</p>
-          <h2>Vamos agendar?</h2>
-          <a
-            className="customerPortalLink"
-            href={`/cliente/login?organization=${catalog.organization?.slug || organization}`}
-          >
-            Já sou cliente · ver meus horários
-          </a>
+          <h2>
+            {organization
+              ? `Agendar em ${catalog.organization?.name || "sua barbearia"}`
+              : "Encontre sua barbearia"}
+          </h2>
+          <label className="organizationPicker">
+            Barbearia
+            <div>
+              <Store />
+              <select
+                value={organization}
+                onChange={(e) => chooseOrganization(e.target.value)}
+                disabled={organizationsLoading}
+                required
+              >
+                <option value="">
+                  {organizationsLoading
+                    ? "Carregando barbearias..."
+                    : "Selecione uma barbearia"}
+                </option>
+                {organizations.map((item) => (
+                  <option value={item.slug} key={item.slug}>
+                    {item.name}
+                    {item.address ? ` · ${item.address}` : ""}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </label>
+          {organization && (
+            <div className="selectedOrganization">
+              <MapPin />
+              <span>
+                <b>{catalog.organization?.name || "Barbearia selecionada"}</b>
+                <small>
+                  {organizations.find((item) => item.slug === organization)
+                    ?.address || "Agenda online disponível"}
+                </small>
+              </span>
+              <button type="button" onClick={() => chooseOrganization("")}>
+                Trocar
+              </button>
+            </div>
+          )}
+          {organization && (
+            <a
+              className="customerPortalLink"
+              href={`/cliente/login?organization=${catalog.organization?.slug || organization}`}
+            >
+              Já sou cliente · ver meus horários
+            </a>
+          )}
+          {!organization && !organizationsLoading && (
+            <div className="bookingStartState">
+              <Store />
+              <b>Selecione acima onde deseja ser atendido</b>
+              <span>
+                Depois você poderá escolher serviço, profissional, data e
+                horário.
+              </span>
+            </div>
+          )}
           {catalogLoading && (
             <div className="publicCatalogState">
               Carregando serviços e profissionais...
             </div>
           )}
           {!catalogLoading &&
+            organization &&
             !error &&
             (!catalog.services.length || !catalog.barbers.length) && (
               <div className="publicCatalogState">
@@ -182,149 +297,165 @@ function Booking() {
                 </span>
               </div>
             )}
-          <label>
-            Serviço
-            <select
-              value={service}
-              onChange={(e) => setService(e.target.value)}
-            >
-              {catalog.services.map((s) => (
-                <option value={s.id} key={s.id}>
-                  {s.name} · {money(s.priceCents)} · {s.durationMinutes} min
-                </option>
-              ))}
-            </select>
-          </label>
-          <div className="barberChoice">
-            <b>Escolha o profissional</b>
-            <div>
-              {catalog.barbers.map((b) => (
-                <button
-                  type="button"
-                  key={b.id}
-                  className={barber === b.id ? "selected" : ""}
-                  onClick={() => setBarber(b.id)}
+          {organization && (
+            <>
+              <label>
+                Serviço
+                <select
+                  value={service}
+                  onChange={(e) => setService(e.target.value)}
                 >
-                  <i style={{ background: b.color }}>
-                    {b.name
-                      .split(" ")
-                      .map((x) => x[0])
-                      .join("")
-                      .slice(0, 2)}
-                  </i>
-                  <span>
-                    <strong>{b.name}</strong>
-                    <small>
-                      {barber === b.id ? "Selecionado" : "Ver horários"}
-                    </small>
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
-          <label>
-            Data
-            <div className="publicInput">
-              <CalendarDays />
-              <input
-                type="date"
-                min={new Date().toISOString().slice(0, 10)}
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                required
-              />
-            </div>
-          </label>
-          {date && (
-            <div className="slotGroup">
-              <b>Horários disponíveis</b>
-              <div>
-                {slots.length ? (
-                  slots.map((x) => (
+                  {catalog.services.map((s) => (
+                    <option value={s.id} key={s.id}>
+                      {s.name} · {money(s.priceCents)} · {s.durationMinutes} min
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <div className="barberChoice">
+                <b>Escolha o profissional</b>
+                <div>
+                  {catalog.barbers.map((b) => (
                     <button
                       type="button"
-                      className={`${slot === x.startsAt ? "selected" : ""} ${x.status.toLowerCase()}`}
-                      onClick={() =>
-                        x.status === "AVAILABLE" && setSlot(x.startsAt)
-                      }
-                      disabled={x.status !== "AVAILABLE"}
-                      key={x.startsAt}
+                      key={b.id}
+                      className={barber === b.id ? "selected" : ""}
+                      onClick={() => setBarber(b.id)}
                     >
-                      <Clock3 />
-                      {new Date(x.startsAt).toLocaleTimeString("pt-BR", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
+                      <i style={{ background: b.color }}>
+                        {b.name
+                          .split(" ")
+                          .map((x) => x[0])
+                          .join("")
+                          .slice(0, 2)}
+                      </i>
+                      <span>
+                        <strong>{b.name}</strong>
+                        <small>
+                          {barber === b.id ? "Selecionado" : "Ver horários"}
+                        </small>
+                      </span>
                     </button>
-                  ))
-                ) : (
-                  <small>Nenhum horário disponível nesta data.</small>
-                )}
+                  ))}
+                </div>
               </div>
-            </div>
+              <label>
+                Data
+                <div className="publicInput">
+                  <CalendarDays />
+                  <input
+                    type="date"
+                    min={new Date().toISOString().slice(0, 10)}
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    required
+                  />
+                </div>
+              </label>
+              {date && (
+                <div className="slotGroup">
+                  <b>Horários disponíveis</b>
+                  <div>
+                    {slots.length ? (
+                      slots.map((x) => (
+                        <button
+                          type="button"
+                          className={`${slot === x.startsAt ? "selected" : ""} ${x.status.toLowerCase()}`}
+                          onClick={() =>
+                            x.status === "AVAILABLE" && setSlot(x.startsAt)
+                          }
+                          disabled={x.status !== "AVAILABLE"}
+                          key={x.startsAt}
+                        >
+                          <Clock3 />
+                          {new Date(x.startsAt).toLocaleTimeString("pt-BR", {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </button>
+                      ))
+                    ) : (
+                      <small>Nenhum horário disponível nesta data.</small>
+                    )}
+                  </div>
+                </div>
+              )}
+              {date && slots.length > 0 && (
+                <div className="slotLegend">
+                  <span>
+                    <i className="available" />
+                    Disponível
+                  </span>
+                  <span>
+                    <i className="reserved" />
+                    Reservado
+                  </span>
+                  <span>
+                    <i className="blocked" />
+                    Bloqueado
+                  </span>
+                </div>
+              )}
+              <div className="publicDivider" />
+              <label>
+                Nome completo
+                <input name="name" required />
+              </label>
+              <div className="formRow">
+                <label>
+                  WhatsApp
+                  <input
+                    name="phone"
+                    inputMode="tel"
+                    required
+                    placeholder="(65) 99999-9999"
+                    onChange={(e) =>
+                      (e.currentTarget.value = maskPhone(e.currentTarget.value))
+                    }
+                  />
+                </label>
+                <label>
+                  E-mail
+                  <input name="email" type="email" />
+                </label>
+              </div>
+              <label>
+                CPF
+                <input
+                  name="cpf"
+                  inputMode="numeric"
+                  placeholder="000.000.000-00"
+                  required
+                  onChange={(e) =>
+                    (e.currentTarget.value = maskCpf(e.currentTarget.value))
+                  }
+                />
+              </label>
+              <label className="legalConsent publicLegalConsent">
+                <input
+                  name="privacyAccepted"
+                  type="checkbox"
+                  value="true"
+                  required
+                />
+                <span>
+                  Autorizo o uso dos dados para realizar o agendamento e
+                  confirmo que li a{" "}
+                  <a href="/privacidade" target="_blank">
+                    Política de Privacidade
+                  </a>
+                  .
+                </span>
+              </label>
+              {error && <div className="loginError">{error}</div>}
+              <button
+                className="publicSubmit"
+                disabled={loading || catalogLoading || !service || !barber}
+              >
+                {loading ? "Agendando..." : "Solicitar agendamento"}
+              </button>
+            </>
           )}
-          {date && slots.length > 0 && (
-            <div className="slotLegend">
-              <span>
-                <i className="available" />
-                Disponível
-              </span>
-              <span>
-                <i className="reserved" />
-                Reservado
-              </span>
-              <span>
-                <i className="blocked" />
-                Bloqueado
-              </span>
-            </div>
-          )}
-          <div className="publicDivider" />
-          <label>
-            Nome completo
-            <input name="name" required />
-          </label>
-          <div className="formRow">
-            <label>
-              WhatsApp
-              <input
-                name="phone"
-                inputMode="tel"
-                required
-                placeholder="(65) 99999-9999"
-                onChange={(e) =>
-                  (e.currentTarget.value = maskPhone(e.currentTarget.value))
-                }
-              />
-            </label>
-            <label>
-              E-mail
-              <input name="email" type="email" />
-            </label>
-          </div>
-          <label>
-            CPF
-            <input
-              name="cpf"
-              inputMode="numeric"
-              placeholder="000.000.000-00"
-              required
-              onChange={(e) =>
-                (e.currentTarget.value = maskCpf(e.currentTarget.value))
-              }
-            />
-          </label>
-          <label className="legalConsent publicLegalConsent">
-            <input name="privacyAccepted" type="checkbox" value="true" required />
-            <span>Autorizo o uso dos dados para realizar o agendamento e confirmo que li a <a href="/privacidade" target="_blank">Política de Privacidade</a>.</span>
-          </label>
-          {error && <div className="loginError">{error}</div>}
-          <button
-            className="publicSubmit"
-            disabled={loading || catalogLoading || !service || !barber}
-          >
-            {loading ? "Agendando..." : "Solicitar agendamento"}
-          </button>
         </form>
       </section>
     </main>

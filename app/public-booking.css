@@ -5,12 +5,27 @@
   background: #f5f3ee;
 }
 .publicIntro {
-  background: #20241f;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, #151a16a6 0%, #151a16e8 73%),
+    url("/navalha-premium-hero.png") center / cover;
   color: #fff;
   padding: 55px 12%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.publicIntro::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #11161152, transparent 70%);
+  pointer-events: none;
+}
+.publicIntro > * {
+  position: relative;
+  z-index: 1;
 }
 .publicIntro p,
 .publicForm > p {
@@ -27,6 +42,23 @@
   color: #adb1a7;
   line-height: 1.7;
 }
+.publicTrust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+.publicTrust span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: #e9e8e2;
+}
+.publicTrust svg {
+  width: 14px;
+  color: #d9a45d;
+}
 .publicFormArea {
   padding: 40px;
   display: grid;
@@ -36,8 +68,86 @@
   width: min(620px, 100%);
   background: #fff;
   border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 34px;
+  box-shadow: 0 24px 70px #362b1d12;
+}
+.organizationPicker > div {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.organizationPicker svg {
+  position: absolute;
+  left: 13px;
+  width: 17px;
+  color: #a87334;
+  pointer-events: none;
+}
+.organizationPicker select {
+  width: 100%;
+  height: 50px;
+  padding-left: 40px;
+  border-color: #c9b898;
+  font-size: 12px;
+}
+.selectedOrganization {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  margin: -2px 0 12px;
+  border-radius: 8px;
+  background: #f5f1e9;
+}
+.selectedOrganization > svg {
+  width: 18px;
+  color: #a87334;
+}
+.selectedOrganization span {
+  display: grid;
+  gap: 2px;
+}
+.selectedOrganization b {
+  font-size: 11px;
+}
+.selectedOrganization small {
+  color: #74786f;
+  font-size: 9px;
+}
+.selectedOrganization button {
+  border: 0;
+  background: transparent;
+  color: #96652e;
+  font-size: 9px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.bookingStartState {
+  min-height: 180px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  text-align: center;
+  color: #6e736b;
+  border: 1px dashed #d4c8b7;
   border-radius: 10px;
-  padding: 30px;
+  background: #faf8f4;
+}
+.bookingStartState svg {
+  width: 30px;
+  color: #b17a38;
+}
+.bookingStartState b {
+  color: #2b302b;
+  font: 600 17px "Playfair Display";
+}
+.bookingStartState span {
+  max-width: 330px;
+  font-size: 10px;
+  line-height: 1.6;
 }
 .publicForm h2 {
   font: 600 27px "Playfair Display";
@@ -153,7 +263,8 @@
   }
   .publicIntro {
     padding: 25px;
-    min-height: 180px;
+    min-height: 260px;
+    background-position: center 34%;
   }
   .publicIntro h1 {
     font-size: 30px;
@@ -162,6 +273,9 @@
     padding: 15px;
   }
   .publicForm {
-    padding: 22px;
+    padding: 22px 18px;
+  }
+  .publicTrust {
+    margin-top: 16px;
   }
 }

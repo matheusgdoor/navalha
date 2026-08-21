@@ -3,7 +3,6 @@ import {
   CalendarCheck,
   ChartNoAxesCombined,
   Check,
-  Clock3,
   MessageCircle,
   Scissors,
   ShieldCheck,
@@ -50,6 +49,7 @@ export default function Landing() {
         <nav>
           <a href="#recursos">Recursos</a>
           <a href="#planos">Planos</a>
+          <a href="/agendar">Agendar</a>
           <a href="#duvidas">Dúvidas</a>
         </nav>
         <div>
@@ -65,73 +65,42 @@ export default function Landing() {
         <div className="heroCopy">
           <p>
             <Sparkles />
-            GESTÃO SIMPLES. BARBEARIA FORTE.
+            BARBEARIAS PERTO. HORÁRIOS EM TEMPO REAL.
           </p>
-          <h1>Sua barbearia organizada, do primeiro horário ao fechamento.</h1>
+          <h1>Seu próximo corte começa com uma escolha simples.</h1>
           <span>
-            Agenda online, clientes, equipe, financeiro e relacionamento em uma
-            plataforma feita para a rotina de quem atende.
+            Encontre barbearias, compare serviços, escolha seu profissional e
+            reserve online. Para quem atende, toda a gestão em um único lugar.
           </span>
           <div className="heroActions">
-            <a href="/cadastro">
-              Começar teste grátis <ArrowRight />
+            <a href="/agendar">
+              Agendar um horário <ArrowRight />
             </a>
-            <a href="/login">Já tenho uma conta</a>
+            <a href="/cadastro">Cadastrar minha barbearia</a>
           </div>
           <small>
             <Check />
             14 dias para testar <Check />
-            Sem cartão agora <Check />
+            Agendamento gratuito <Check />
             Configuração rápida
           </small>
         </div>
-        <div className="heroVisual">
-          <div className="demoTop">
-            <i />
-            <span>NAVALHA · Visão geral</span>
-            <b>Hoje</b>
-          </div>
-          <div className="demoWelcome">
-            <small>PAINEL DA BARBEARIA</small>
-            <h2>Boa tarde, Gustavo 👋</h2>
-            <p>Você tem 7 atendimentos programados hoje.</p>
-          </div>
-          <div className="demoMetrics">
-            <article>
-              <CalendarCheck />
-              <span>
-                <small>Agendamentos</small>
-                <b>07</b>
-              </span>
-            </article>
-            <article>
-              <ChartNoAxesCombined />
-              <span>
-                <small>Faturamento</small>
-                <b>R$ 620</b>
-              </span>
-            </article>
-            <article>
-              <Clock3 />
-              <span>
-                <small>Próximo horário</small>
-                <b>14:30</b>
-              </span>
-            </article>
-          </div>
-          <div className="demoAgenda">
-            <p>PRÓXIMOS ATENDIMENTOS</p>
-            {[
-              "14:30 · Caio Ferreira",
-              "15:30 · Bruno Almeida",
-              "17:00 · Matheus Carvalho",
-            ].map((x, i) => (
-              <article key={x}>
-                <i>{i + 1}</i>
-                <b>{x}</b>
-                <span>Confirmado</span>
-              </article>
-            ))}
+        <div className="heroVisual heroPhoto">
+          <img
+            src="/navalha-premium-hero.png"
+            alt="Barbeiro atendendo um cliente em uma barbearia moderna"
+          />
+          <div className="heroPhotoCard">
+            <span>
+              <Scissors />
+            </span>
+            <div>
+              <small>AGENDE ONLINE</small>
+              <b>Escolha sua barbearia e reserve agora.</b>
+            </div>
+            <a href="/agendar">
+              <ArrowRight />
+            </a>
           </div>
         </div>
       </section>
@@ -290,8 +259,8 @@ export default function Landing() {
           <a href="/cadastro">Criar conta</a>
           <a href="/login-plataforma">Portal SaaS</a>
           <a href="/privacidade">Privacidade</a>
-            <a href="/termos">Termos</a>
-            <a href="/instalar">Instalar aplicativo</a>
+          <a href="/termos">Termos</a>
+          <a href="/instalar">Instalar aplicativo</a>
         </nav>
         <small>
           © {new Date().getFullYear()} Navalha. Todos os direitos reservados.
